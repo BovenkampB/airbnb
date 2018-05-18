@@ -1,5 +1,6 @@
 .vs/
 *.dll
+*.suo
 *.pdb
 *.swp
 *.*~

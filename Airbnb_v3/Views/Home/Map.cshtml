@@ -76,7 +76,7 @@
 
 
 
-    fetch('https://localhost:9001/Listings/GetListings')
+    fetch('http://localhost:9001/Listings/GetListings')
         .then((resp) => resp.json())
         .then(function (data) {
             for (var i = 0; i < data.length; i++) {

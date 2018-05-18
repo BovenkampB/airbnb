@@ -155,5 +155,20 @@ namespace Airbnb_v3.Controllers
         {
             return _context.Listings.Any(e => e.Id == id);
         }
+
+        private IQueryable<Listings> totalQueryResult;
+        [HttpGet]
+        public IQueryable GetListings()
+        {
+            totalQueryResult = _context.Listings.Select(i => new Listings
+            {
+                Id = i.Id,
+                Name = i.Name,
+                Longitude = i.Longitude,
+                Latitude = i.Latitude
+            }).Take(10);
+
+            return totalQueryResult;
+        }
     }
 }

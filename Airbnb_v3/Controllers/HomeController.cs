@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Airbnb_v3.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Airbnb_v3.Controllers
 {
@@ -22,6 +23,7 @@ namespace Airbnb_v3.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult Map()
         {
             ViewData["Message"] = "Your Map page.";
