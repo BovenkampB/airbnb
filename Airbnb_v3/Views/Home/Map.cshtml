@@ -100,7 +100,11 @@
                             coordinates: [longtitudefloat, latitudefloat]
                         },
                         properties: {
-                            name: data[i].name
+                            name: data[i].name,
+                            id: data[i].id,
+                            description: data[i].description,
+                            price: data[i].price
+
                         }
                     }]
                 };
@@ -115,10 +119,10 @@
                     new mapboxgl.Marker(el)
                         .setLngLat(marker.geometry.coordinates)
                         .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
-                            .setHTML('<h3>' + marker.properties.name + '</h3>'))
+                            .setHTML('<h3>' + marker.properties.name + '</h3><p>' + marker.properties.description + '</p> <p>' + marker.properties.price + '</p><p> <a href="http://localhost:9001/Listings/Details/ '+ marker.properties.id +'">Toon meer details</a></p>'))
                         .addTo(map);
                 });
 
-            }
+            }   
         });
 </script>
