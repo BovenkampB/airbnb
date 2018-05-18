@@ -1,0 +1,124 @@
+﻿@{
+    ViewData["Title"] = "Map";
+}
+
+
+<h2>Map</h2>
+<div id='map' style='width: 800px; height: 600px;'></div>
+
+<style>
+
+    .pin {
+        width: 20px;
+        height: 20px;
+        border-radius: 50% 50% 50% 0;
+        background: #89849b;
+        -webkit-animation-name: bounce;
+        -moz-animation-name: bounce;
+        -o-animation-name: bounce;
+        -ms-animation-name: bounce;
+        animation-name: bounce;
+        -webkit-animation-fill-mode: both;
+        -moz-animation-fill-mode: both;
+        -o-animation-fill-mode: both;
+        -ms-animation-fill-mode: both;
+        animation-fill-mode: both;
+        -webkit-animation-duration: 1s;
+        -moz-animation-duration: 1s;
+        -o-animation-duration: 1s;
+        -ms-animation-duration: 1s;
+        animation-duration: 1s;
+    }
+
+        .pin:after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            margin: 6px 0 0 6px;
+            background: #2f2f2f;
+            position: absolute;
+            border-radius: 50%;
+        }
+
+
+    .marker {
+        width: 14px;
+        height: 14px;
+        border-radius: 50% 50% 50% 0;
+        background: #2F2F2F;
+        transform: rotate(-45deg);
+        animation-name: bounce;
+        animation-fill-mode: both;
+        animation-duration: 1s;
+    }
+
+
+    .mapboxgl-popup {
+        max-width: 200px;
+    }
+
+    .mapboxgl-popup-content {
+        text-align: center;
+        font-family: 'Open Sans', sans-serif;
+    }
+</style>
+
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYm92ZW5rYW1wYiIsImEiOiJjamc2OWkyN24xcmxnMzNtbzY1ZmlpMXk5In0.wZO5EUCXogq6QJS7p_xUUg';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/bovenkampb/cjh911gie1leh2rlo81r9bs4x',
+        center: [4.9, 52.36], // starting position [lng, lat]
+        zoom: 11 // starting zoom
+    });
+
+    map.addControl(new mapboxgl.NavigationControl());
+
+
+
+    fetch('https://localhost:9001/Listings/GetListings')
+        .then((resp) => resp.json())
+        .then(function (data) {
+            for (var i = 0; i < data.length; i++) {
+                var longtitudestring = String(data[i].longitude);
+                longtitudestring = longtitudestring.replace(".", "");
+                var longtitudefloat = parseFloat([longtitudestring.slice(0, 1) + "." + longtitudestring.slice(1)].join(''));
+
+                var latitudestring = String(data[i].latitude);
+                latitudestring = latitudestring.replace(".", "");
+                var latitudefloat = parseFloat([latitudestring.slice(0, 2) + "." + latitudestring.slice(2)].join(''));
+
+                console.log(longtitudefloat);
+                console.log(latitudefloat);
+
+                var geojson = {
+                    features: [{
+                        type: 'Feature',
+                        geometry: {
+                            type: 'Point',
+
+                            coordinates: [longtitudefloat, latitudefloat]
+                        },
+                        properties: {
+                            name: data[i].name
+                        }
+                    }]
+                };
+
+                geojson.features.forEach(function (marker) {
+
+                    // create a HTML element for each feature
+                    var el = document.createElement('div');
+                    el.className = 'pin';
+
+                    // make a marker for each feature and add to the map
+                    new mapboxgl.Marker(el)
+                        .setLngLat(marker.geometry.coordinates)
+                        .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+                            .setHTML('<h3>' + marker.properties.name + '</h3>'))
+                        .addTo(map);
+                });
+
+            }
+        });
+</script>

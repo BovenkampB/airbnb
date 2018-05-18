@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <UserSecretsId>aspnet-Airbnb_v3-40961B15-E08D-4BC3-A87A-307E90C7CC47</UserSecretsId>
+    <StartupObject></StartupObject>
   </PropertyGroup>
 
 

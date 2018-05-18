@@ -22,6 +22,13 @@ namespace Airbnb_v3.Controllers
             return View();
         }
 
+        public IActionResult Map()
+        {
+            ViewData["Message"] = "Your Map page.";
+
+            return View();
+        }
+
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
