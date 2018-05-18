@@ -1,0 +1,605 @@
+﻿@model IEnumerable<Airbnb_v3.Models.Listings>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ListingUrl)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ScrapeId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastScraped)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Summary)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Space)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ExperiencesOffered)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NeighborhoodOverview)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Notes)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Transit)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Access)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Interaction)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HouseRules)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ThumbnailUrl)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MediumUrl)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PictureUrl)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.XlPictureUrl)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HostId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HostUrl)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HostName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HostSince)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HostLocation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HostAbout)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HostResponseTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HostResponseRate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HostAcceptanceRate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HostIsSuperhost)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HostThumbnailUrl)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HostPictureUrl)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HostNeighbourhood)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HostListingsCount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HostTotalListingsCount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HostVerifications)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HostHasProfilePic)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HostIdentityVerified)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Street)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Neighbourhood)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NeighbourhoodCleansed)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NeighbourhoodGroupCleansed)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.City)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.State)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Zipcode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Market)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SmartLocation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CountryCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Country)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Latitude)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Longitude)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsLocationExact)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PropertyType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RoomType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Accommodates)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Bathrooms)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Bedrooms)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Beds)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BedType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Amenities)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SquareFeet)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.WeeklyPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MonthlyPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SecurityDeposit)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CleaningFee)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.GuestsIncluded)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ExtraPeople)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MinimumNights)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MaximumNights)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CalendarUpdated)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HasAvailability)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Availability30)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Availability60)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Availability90)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Availability365)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CalendarLastScraped)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NumberOfReviews)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstReview)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastReview)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ReviewScoresRating)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ReviewScoresAccuracy)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ReviewScoresCleanliness)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ReviewScoresCheckin)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ReviewScoresCommunication)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ReviewScoresLocation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ReviewScoresValue)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RequiresLicense)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.License)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.JurisdictionNames)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.InstantBookable)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsBusinessTravelReady)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CancellationPolicy)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RequireGuestProfilePicture)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RequireGuestPhoneVerification)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CalculatedHostListingsCount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ReviewsPerMonth)
+                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ListingUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScrapeId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastScraped)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Summary)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Space)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExperiencesOffered)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NeighborhoodOverview)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Notes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Transit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Access)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Interaction)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HouseRules)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ThumbnailUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MediumUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PictureUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.XlPictureUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HostId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HostUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HostName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HostSince)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HostLocation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HostAbout)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HostResponseTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HostResponseRate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HostAcceptanceRate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HostIsSuperhost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HostThumbnailUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HostPictureUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HostNeighbourhood)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HostListingsCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HostTotalListingsCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HostVerifications)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HostHasProfilePic)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HostIdentityVerified)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Street)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Neighbourhood)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NeighbourhoodCleansed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NeighbourhoodGroupCleansed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.State)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Zipcode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Market)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SmartLocation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CountryCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Country)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Latitude)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Longitude)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsLocationExact)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PropertyType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Accommodates)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bathrooms)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bedrooms)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Beds)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BedType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amenities)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SquareFeet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WeeklyPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MonthlyPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SecurityDeposit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CleaningFee)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GuestsIncluded)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExtraPeople)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MinimumNights)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaximumNights)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CalendarUpdated)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HasAvailability)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Availability30)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Availability60)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Availability90)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Availability365)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CalendarLastScraped)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfReviews)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstReview)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastReview)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReviewScoresRating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReviewScoresAccuracy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReviewScoresCleanliness)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReviewScoresCheckin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReviewScoresCommunication)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReviewScoresLocation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReviewScoresValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequiresLicense)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.License)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JurisdictionNames)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InstantBookable)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsBusinessTravelReady)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CancellationPolicy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequireGuestProfilePicture)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequireGuestPhoneVerification)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CalculatedHostListingsCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReviewsPerMonth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdNavigation.Access)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

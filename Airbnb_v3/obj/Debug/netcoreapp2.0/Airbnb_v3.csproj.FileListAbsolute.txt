@@ -1,0 +1,12 @@
+C:\Projects\NOTS WAPP\Airbnb_v3\Airbnb_v3\bin\Debug\netcoreapp2.0\Airbnb_v3.deps.json
+C:\Projects\NOTS WAPP\Airbnb_v3\Airbnb_v3\bin\Debug\netcoreapp2.0\Airbnb_v3.runtimeconfig.json
+C:\Projects\NOTS WAPP\Airbnb_v3\Airbnb_v3\bin\Debug\netcoreapp2.0\Airbnb_v3.runtimeconfig.dev.json
+C:\Projects\NOTS WAPP\Airbnb_v3\Airbnb_v3\bin\Debug\netcoreapp2.0\Airbnb_v3.dll
+C:\Projects\NOTS WAPP\Airbnb_v3\Airbnb_v3\bin\Debug\netcoreapp2.0\Airbnb_v3.pdb
+C:\Projects\NOTS WAPP\Airbnb_v3\Airbnb_v3\obj\Debug\netcoreapp2.0\Airbnb_v3.csprojAssemblyReference.cache
+C:\Projects\NOTS WAPP\Airbnb_v3\Airbnb_v3\obj\Debug\netcoreapp2.0\Airbnb_v3.csproj.CoreCompileInputs.cache
+C:\Projects\NOTS WAPP\Airbnb_v3\Airbnb_v3\obj\Debug\netcoreapp2.0\Airbnb_v3.AssemblyInfoInputs.cache
+C:\Projects\NOTS WAPP\Airbnb_v3\Airbnb_v3\obj\Debug\netcoreapp2.0\Airbnb_v3.AssemblyInfo.cs
+C:\Projects\NOTS WAPP\Airbnb_v3\Airbnb_v3\obj\Debug\netcoreapp2.0\Airbnb_v3.dll
+C:\Projects\NOTS WAPP\Airbnb_v3\Airbnb_v3\obj\Debug\netcoreapp2.0\Airbnb_v3.pdb
+C:\Projects\NOTS WAPP\Airbnb_v3\Airbnb_v3\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs

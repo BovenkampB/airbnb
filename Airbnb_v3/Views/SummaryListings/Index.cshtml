@@ -1,0 +1,119 @@
+﻿@model IEnumerable<Airbnb_v3.Models.SummaryListings>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HostId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HostName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NeighbourhoodGroup)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Neighbourhood)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Latitude)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Longitude)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RoomType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MinimumNights)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NumberOfReviews)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastReview)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ReviewsPerMonth)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CalculatedHostListingsCount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Availability365)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HostId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HostName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NeighbourhoodGroup)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Neighbourhood)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Latitude)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Longitude)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MinimumNights)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfReviews)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastReview)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReviewsPerMonth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CalculatedHostListingsCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Availability365)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
