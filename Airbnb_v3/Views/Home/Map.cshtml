@@ -102,7 +102,7 @@
                         properties: {
                             name: data[i].name,
                             id: data[i].id,
-                            description: data[i].description,
+                            thumbnailurl: data[i].thumbnailurl,
                             price: data[i].price
 
                         }
@@ -119,7 +119,7 @@
                     new mapboxgl.Marker(el)
                         .setLngLat(marker.geometry.coordinates)
                         .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
-                            .setHTML('<h3>' + marker.properties.name + '</h3><p>' + marker.properties.description + '</p> <p>' + marker.properties.price + '</p><p> <a href="http://localhost:9001/Listings/Details/ '+ marker.properties.id +'">Toon meer details</a></p>'))
+                            .setHTML('<h3>' + marker.properties.name + '</h3> <br/> <img src=\"' + marker.properties.thumbnailurl + '\" alt="Thumbnail" height="144" width="216" /> <p>' + marker.properties.price + '</p><p> <a href="http://localhost:9001/Listings/Details/ '+ marker.properties.id +'">Toon meer details</a></p>'))
                         .addTo(map);
                 });
 

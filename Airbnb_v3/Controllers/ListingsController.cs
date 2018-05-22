@@ -167,7 +167,8 @@ namespace Airbnb_v3.Controllers
                 Longitude = i.Longitude,
                 Latitude = i.Latitude,
                 Description = i.Description,
-                Price = i.Price
+                Price = i.Price,
+                ThumbnailUrl = i.ThumbnailUrl
             }).Take(10);
 
             return totalQueryResult;
