@@ -148,5 +148,17 @@ namespace Airbnb_v3.Controllers
         {
             return _context.Neighbourhoods.Any(e => e.Neighbourhood == id);
         }
+
+        private IQueryable<Neighbourhoods> totalQueryResult;
+        [HttpGet]
+        public IQueryable GetNeighbourhoods()
+        {
+            totalQueryResult = _context.Neighbourhoods.Select(i => new Neighbourhoods
+            {
+                Neighbourhood = i.Neighbourhood
+            });
+
+            return totalQueryResult;
+        }
     }
 }
