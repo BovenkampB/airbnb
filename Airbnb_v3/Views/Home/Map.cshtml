@@ -17,7 +17,7 @@
     <div class="form-row">
         <div class="col-lg-3 form-group">
             <label>Wijk</label>
-            <select id="selectNeighbourhood" name="cars" class="form-control">
+            <select id="selectNeighbourhood" name="NeighbourhoodFilter" class="form-control">
 
             </select>
         </div>
@@ -38,7 +38,7 @@
             <input type="number" class="form-control" min="1" max="5" />
         </div>
     </div>
-    <div class="form-row"><input type="button" value="Zoeken" class="form-control btn-primary" /></div>
+    <div class="form-row"><input type="button" value="Zoeken" asp-controller="ListingsController" asp-action="GetListingsWithFilter" asp-route-id="selectNeighbourhood.Value" class="form-control btn-primary" /></div>
 </form>
 @*<div id='map' class='map pad2'>Map</div>*@
 
@@ -241,6 +241,8 @@ a:hover {
     fetch('http://localhost:9001/Listings/GetListings')
         .then((resp) => resp.json())
         .then(function (data) {
+            var geojson = { features: [] }
+
             for (var i = 0; i < data.length; i++) {
                 var longtitudestring = String(data[i].longitude);
                 longtitudestring = longtitudestring.replace(".", "");
@@ -250,61 +252,141 @@ a:hover {
                 latitudestring = latitudestring.replace(".", "");
                 var latitudefloat = parseFloat([latitudestring.slice(0, 2) + "." + latitudestring.slice(2)].join(''));
 
-                console.log(longtitudefloat);
-                console.log(latitudefloat);
+                var currentGeo = {
+                    type: 'Feature',
+                    geometry: {
+                        type: 'Point',
 
-                var geojson = {
-                    features: [{
-                        type: 'Feature',
-                        geometry: {
-                            type: 'Point',
+                        coordinates: [longtitudefloat, latitudefloat]
+                    },
+                    properties: {
+                        name: data[i].name,
+                        id: data[i].id,
+                        thumbnailurl: data[i].thumbnailurl
+                    }
+                }
 
-                            coordinates: [longtitudefloat, latitudefloat]
-                        },
-                        properties: {
-                            name: data[i].name,
-                            id: data[i].id,
-                            thumbnailurl: data[i].thumbnailurl,
-                            price: data[i].price
-                        }
-                    }]
-                };
+                geojson.features.push(currentGeo);
 
-                geojson.features.forEach(function (marker) {
 
-                    // create a HTML element for each feature
-                    var el = document.createElement('div');
-                    el.className = 'pin';
+                //var geojson = {
+                //    features: [{
+                //        type: 'Feature',
+                //        geometry: {
+                //            type: 'Point',
 
-                    // make a marker for each feature and add to the map
-                    new mapboxgl.Marker(el)
-                        .setLngLat(marker.geometry.coordinates)
-                        .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
-                            .setHTML('<h3>' + marker.properties.name + '</h3> <br/> <img src="' + marker.properties.thumbnailurl + '" alt="Thumbnail" height="144" width="216" /> <p>' + marker.properties.price + '</p><p> <a href="http://localhost:9001/Listings/Details/ ' + marker.properties.id + '">Toon meer details</a></p>'))
-                        .addTo(map);
+                //            coordinates: [longtitudefloat, latitudefloat]
+                //        },
+                //        properties: {
+                //            name: data[i].name,
+                //            id: data[i].id,
+                //            thumbnailurl: data[i].thumbnailurl,
+                //            price: data[i].price
+                //        }
+                //    }]
+                //};
+
+                //geojson.features.forEach(function (marker) {
+
+                //    // create a HTML element for each feature
+                //    var el = document.createElement('div');
+                //    el.className = 'pin';
+
+                //    // make a marker for each feature and add to the map
+                //    new mapboxgl.Marker(el)
+                //        .setLngLat(marker.geometry.coordinates)
+                //        .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+                //            .setHTML('<h3>' + marker.properties.name + '</h3> <br/> <img src="' + marker.properties.thumbnailurl + '" alt="Thumbnail" height="144" width="216" /> <p>' + marker.properties.price + '</p><p> <a href="http://localhost:9001/Listings/Details/ ' + marker.properties.id + '">Toon meer details</a></p>'))
+                //        .addTo(map);
                     
-                });
+                //});
 
                   
 
             }
+
+            loadGeoJSON(geojson);
         });
+
+    function loadGeoJSON(geojson) {
+    map.addSource("geolistings", {
+        type: "geojson",
+        data: geojson,
+        cluster: true,
+        clusterMaxZoom: 14,
+        clusterRadius: 50
+    });
+
+    map.addLayer({
+        id: "clusters",
+        type: "circle",
+        source: "geolistings",
+        filter: ["has", "point_count"],
+        paint: {
+            "circle-color": [
+                "step",
+                ["get", "point_count"],
+                "#ffb1a0",
+                100,
+                "#ff8970",
+                750,
+                "#ff5c3a"
+            ],
+            "circle-radius": [
+                "step",
+                ["get", "point_count"],
+                20,
+                100,
+                30,
+                750,
+                40
+            ]
+        }
+    });
+
+    map.addLayer({
+        id: "cluster-count",
+        type: "symbol",
+        source: "geolistings",
+        filter: ["has", "point_count"],
+        layout: {
+            "text-field": "{point_count_abbreviated}",
+            "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+            "text-size": 12
+        }
+    });
+
+    map.addLayer({
+        id: "unclustered-point",
+        type: "circle",
+        source: "geolistings",
+        filter: ["!has", "point_count"],
+        paint: {
+            "circle-color": "#ff0000",
+            "circle-radius": 5,
+            "circle-stroke-width": 1,
+            "circle-stroke-color": "#fff"
+        }
+    });
+}
 
     fetch('http://localhost:9001/Neighbourhoods/GetNeighbourhoods')
         .then((resp) => resp.json())
         .then(function (data) {
-        for (var i = 0; i < data.length; i++) {
-            console.log(data[i].neighbourhood);
+            for (var i = 0; i < data.length; i++) {
+                console.log(data[i].neighbourhood);
 
-            var para = document.createElement("option");
-            para.setAttribute("Value", data[i].neighbourhood);
-            var node = document.createTextNode(data[i].neighbourhood);
-            para.appendChild(node);
- 
-            var element = document.getElementById("selectNeighbourhood");
-            element.appendChild(para);
-        }
-    });
+                var para = document.createElement("option");
+                para.setAttribute("Value", data[i].neighbourhood);
+                var node = document.createTextNode(data[i].neighbourhood);
+                para.appendChild(node);
+
+                var element = document.getElementById("selectNeighbourhood");
+                element.appendChild(para);
+
+
+            }
+        });
 
 //    function buildLocationList(data) {
 //  // Iterate through the list of listings

@@ -160,5 +160,7 @@ namespace Airbnb_v3.Controllers
 
             return totalQueryResult;
         }
+
+        
     }
 }

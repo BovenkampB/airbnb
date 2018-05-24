@@ -9,6 +9,7 @@ using Airbnb_v3.Models;
 
 namespace Airbnb_v3.Controllers
 {
+
     public class ListingsController : Controller
     {
         private readonly AirBNBContext _context;
@@ -172,5 +173,25 @@ namespace Airbnb_v3.Controllers
 
             return totalQueryResult;
         }
+
+
+        private IQueryable<Listings> filteredQueryResult;
+        [HttpGet]
+        public IQueryable GetListingsWithFilter(string filter)
+        {
+            filteredQueryResult = _context.Listings.Select(i => new Listings
+            {
+                Id = i.Id,
+                Name = i.Name,
+                Longitude = i.Longitude,
+                Latitude = i.Latitude,
+                Price = i.Price,
+                ThumbnailUrl = i.ThumbnailUrl,
+                Neighbourhood = i.Neighbourhood
+            }).Where(m => m.Neighbourhood.Contains(filter));
+
+            return filteredQueryResult;
+        }
+        
     }
 }
