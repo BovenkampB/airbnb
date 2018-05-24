@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Airbnb_v3.Data;
 using Airbnb_v3.Models;
 using Airbnb_v3.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Rewrite;
 
 namespace Airbnb_v3
 {
@@ -29,6 +31,20 @@ namespace Airbnb_v3
             //Default connection string voor identity
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+
+            // Use HTTPS instead of HTTP
+            //services.Configure<MvcOptions>(options =>
+            //{
+            //    options.Filters.Add(new RequireHttpsAttribute());
+            //});
+
+            services.AddAuthentication().AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
+                googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+            });
+
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -57,6 +73,11 @@ namespace Airbnb_v3
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            // Make use of HTTPS instead of HTTP
+            //var options = new RewriteOptions().AddRedirectToHttps();
+
+            //app.UseRewriter(options);
 
             app.UseStaticFiles();
 

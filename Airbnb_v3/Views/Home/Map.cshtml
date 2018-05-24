@@ -292,7 +292,7 @@ a:hover {
 
     fetch('http://localhost:9001/Neighbourhoods/GetNeighbourhoods')
         .then((resp) => resp.json())
-    .then(function (data) {
+        .then(function (data) {
         for (var i = 0; i < data.length; i++) {
             console.log(data[i].neighbourhood);
 
