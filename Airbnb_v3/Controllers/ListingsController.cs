@@ -157,18 +157,21 @@ namespace Airbnb_v3.Controllers
             return _context.Listings.Any(e => e.Id == id);
         }
 
-        private IQueryable<Listings> totalQueryResult;
+        private IQueryable<SmallListings> totalQueryResult;
         [HttpGet]
         public IQueryable GetListings()
         {
-            totalQueryResult = _context.Listings.Select(i => new Listings
+            totalQueryResult = _context.SmallListings.Select(i => new SmallListings
             {
                 Id = i.Id,
                 Name = i.Name,
                 Longitude = i.Longitude,
                 Latitude = i.Latitude,
                 Price = i.Price,
-                ThumbnailUrl = i.ThumbnailUrl
+                ThumbnailUrl = i.ThumbnailUrl,
+                Description = i.Description,
+                Neighbourhood = i.Neighbourhood,
+                ReviewScoresRating = i.ReviewScoresRating
             });
 
             return totalQueryResult;

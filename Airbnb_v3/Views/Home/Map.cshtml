@@ -262,47 +262,15 @@ a:hover {
                     properties: {
                         name: data[i].name,
                         id: data[i].id,
-                        thumbnailurl: data[i].thumbnailurl
+                        thumbnailurl: data[i].thumbnailurl,
+                        price: data[i].price,
+                        description: data[i].description,
+                        neighbourhood: data[i].neighbourhood,
+                        reviewscoresrating: data[i].reviewscoresrating
                     }
                 }
 
                 geojson.features.push(currentGeo);
-
-
-                //var geojson = {
-                //    features: [{
-                //        type: 'Feature',
-                //        geometry: {
-                //            type: 'Point',
-
-                //            coordinates: [longtitudefloat, latitudefloat]
-                //        },
-                //        properties: {
-                //            name: data[i].name,
-                //            id: data[i].id,
-                //            thumbnailurl: data[i].thumbnailurl,
-                //            price: data[i].price
-                //        }
-                //    }]
-                //};
-
-                //geojson.features.forEach(function (marker) {
-
-                //    // create a HTML element for each feature
-                //    var el = document.createElement('div');
-                //    el.className = 'pin';
-
-                //    // make a marker for each feature and add to the map
-                //    new mapboxgl.Marker(el)
-                //        .setLngLat(marker.geometry.coordinates)
-                //        .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
-                //            .setHTML('<h3>' + marker.properties.name + '</h3> <br/> <img src="' + marker.properties.thumbnailurl + '" alt="Thumbnail" height="144" width="216" /> <p>' + marker.properties.price + '</p><p> <a href="http://localhost:9001/Listings/Details/ ' + marker.properties.id + '">Toon meer details</a></p>'))
-                //        .addTo(map);
-                    
-                //});
-
-                  
-
             }
 
             loadGeoJSON(geojson);
@@ -368,7 +336,26 @@ a:hover {
             "circle-stroke-color": "#fff"
         }
     });
-}
+
+    // When a click event occurs on a feature in the places layer, open a popup at the
+    // location of the feature, with description HTML from its properties.
+    map.on('click', 'unclustered-point', function (e) {
+        var coordinates = e.features[0].geometry.coordinates.slice();
+        var description = e.features[0].properties.description;
+
+        // Ensure that if the map is zoomed out such that multiple
+        // copies of the feature are visible, the popup appears
+        // over the copy being pointed to.
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+
+        new mapboxgl.Popup()
+            .setLngLat(coordinates)
+            .setHTML('<h3>' + e.features[0].properties.name + '</h3> <br/> <img src="' + e.features[0].properties.thumbnailurl + '" alt="Thumbnail" height="144" width="216" /> <p>' + e.features[0].properties.price + '</p><p> <a href="http://localhost:9001/Listings/Details/ ' + e.features[0].properties.id + '">Toon meer details</a></p>')
+            .addTo(map);
+        });
+    }
 
     fetch('http://localhost:9001/Neighbourhoods/GetNeighbourhoods')
         .then((resp) => resp.json())

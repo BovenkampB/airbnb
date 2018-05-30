@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -12,6 +13,7 @@ namespace Airbnb_v3.Models
         public virtual DbSet<Reviews> Reviews { get; set; }
         public virtual DbSet<SummaryListings> SummaryListings { get; set; }
         public virtual DbSet<SummaryReviews> SummaryReviews { get; set; }
+        public virtual DbSet<SmallListings> SmallListings { get; set; }
 
         //Constructor which allows configuration to be passed into the context by DI
         public AirBNBContext(DbContextOptions<AirBNBContext> options) : base(options)
@@ -45,6 +47,31 @@ namespace Airbnb_v3.Models
                     .HasForeignKey(d => d.ListingId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_calendar_listings");
+            });
+
+            modelBuilder.Entity<SmallListings>(entity =>
+            {
+                entity.ToTable("Listings");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .ValueGeneratedNever();
+                entity.Property(e => e.Description).HasColumnName("description");
+
+                entity.Property(e => e.Latitude).HasColumnName("latitude");
+
+                entity.Property(e => e.Longitude).HasColumnName("longitude");
+
+                entity.Property(e => e.Price)
+                    .HasColumnName("price")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.ThumbnailUrl).HasColumnName("thumbnail_url");
+
+                entity.Property(e => e.Neighbourhood).HasColumnName("neighbourhood");
+
+                entity.Property(e => e.ReviewScoresRating).HasColumnName("review_scores_rating");
+
             });
 
             modelBuilder.Entity<Listings>(entity =>
