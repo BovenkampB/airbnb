@@ -169,7 +169,7 @@ namespace Airbnb_v3.Controllers
                 Latitude = i.Latitude,
                 Price = i.Price,
                 ThumbnailUrl = i.ThumbnailUrl
-            }).Take(10);
+            });
 
             return totalQueryResult;
         }
