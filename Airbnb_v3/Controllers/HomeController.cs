@@ -13,7 +13,7 @@ namespace Airbnb_v3.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return Redirect("/Listings");
         }
 
         public IActionResult About()

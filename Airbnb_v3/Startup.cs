@@ -13,6 +13,7 @@ using Airbnb_v3.Models;
 using Airbnb_v3.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
+using Airbnb_v3.Repositories;
 
 namespace Airbnb_v3
 {
@@ -58,6 +59,7 @@ namespace Airbnb_v3
 
             //ConnectionString is now retreived from appsettings.json
             services.AddDbContext<AirBNBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Airbnb")));
+            services.AddScoped<IListingRepository, ListingRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

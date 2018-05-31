@@ -6,25 +6,34 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Airbnb_v3.Models;
+using Airbnb_v3.Repositories;
+using Airbnb_v3.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using System.Collections;
 
 namespace Airbnb_v3.Controllers
 {
 
     public class ListingsController : Controller
     {
+        private readonly IListingRepository _repo;
+        private static ListingsFilters listingFilters;
+        //context moet er nog uitgesloopt worden( zit namelijk al in repository)
         private readonly AirBNBContext _context;
 
-        public ListingsController(AirBNBContext context)
+        public ListingsController(IListingRepository repo, AirBNBContext context)
         {
+            _repo = repo;
             _context = context;
         }
 
-        // GET: Listings
-        public async Task<IActionResult> Index()
-        {
-            var airBNBContext = _context.Listings.Include(l => l.IdNavigation);
-            return View(await airBNBContext.ToListAsync());
-        }
+        //standaard index
+        //// GET: Listings
+        //public async Task<IActionResult> Index()
+        //{
+        //    var airBNBContext = _context.Listings.Include(l => l.IdNavigation);
+        //    return View(await airBNBContext.ToListAsync());
+        //}
 
         // GET: Listings/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -157,30 +166,30 @@ namespace Airbnb_v3.Controllers
             return _context.Listings.Any(e => e.Id == id);
         }
 
-        private IQueryable<SmallListings> totalQueryResult;
-        [HttpGet]
-        public IQueryable GetListings()
-        {
-            totalQueryResult = _context.SmallListings.Select(i => new SmallListings
-            {
-                Id = i.Id,
-                Name = i.Name,
-                Longitude = i.Longitude,
-                Latitude = i.Latitude,
-                Price = i.Price,
-                ThumbnailUrl = i.ThumbnailUrl,
-                Description = i.Description,
-                Neighbourhood = i.Neighbourhood,
-                ReviewScoresRating = i.ReviewScoresRating
-            });
+        //private IQueryable<SmallListings> totalQueryResult;
+        //[HttpGet]
+        //public IQueryable GetListings()
+        //{
+        //    totalQueryResult = _context.SmallListings.Select(i => new SmallListings
+        //    {
+        //        Id = i.Id,
+        //        Name = i.Name,
+        //        Longitude = i.Longitude,
+        //        Latitude = i.Latitude,
+        //        Price = i.Price,
+        //        ThumbnailUrl = i.ThumbnailUrl,
+        //        Description = i.Description,
+        //        Neighbourhood = i.Neighbourhood,
+        //        ReviewScoresRating = i.ReviewScoresRating
+        //    });
 
-            return totalQueryResult;
-        }
+        //    return totalQueryResult;
+        //}
 
 
         private IQueryable<Listings> filteredQueryResult;
         [HttpGet]
-        public IQueryable GetListingsWithFilter(string filter)
+        public IQueryable GetListingsWithFilter(String filter)
         {
             filteredQueryResult = _context.Listings.Select(i => new Listings
             {
@@ -190,11 +199,43 @@ namespace Airbnb_v3.Controllers
                 Latitude = i.Latitude,
                 Price = i.Price,
                 ThumbnailUrl = i.ThumbnailUrl,
-                Neighbourhood = i.Neighbourhood
+                Neighbourhood = i.Neighbourhood,
+                Description = i.Description,
+                ReviewScoresRating = i.ReviewScoresRating,
+
             }).Where(m => m.Neighbourhood.Contains(filter));
 
             return filteredQueryResult;
         }
-        
+
+
+        [HttpGet]
+        public IEnumerable GetListings()
+        {
+            var result = _repo.GetListings(listingFilters);
+
+            return result;
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Index()
+        {
+            IEnumerable<Neighbourhoods> neighbourhoods = (IEnumerable<Neighbourhoods>)_repo.GetNeighbourHoods();
+
+            return View(new ListingsViewModel(listingFilters, neighbourhoods));
+        }
+
+        [HttpPost]
+        public IActionResult Filter(ListingsFilters filters)
+        {
+            listingFilters = filters;
+            return Redirect("../Listings");
+        }
+
+        public IActionResult ClearFilter()
+        {
+            listingFilters = null;
+            return Redirect("../Listings");
+        }
     }
 }
