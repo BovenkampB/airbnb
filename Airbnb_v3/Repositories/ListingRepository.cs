@@ -23,19 +23,18 @@ namespace Airbnb_v3.Repositories
 
             if (filters == null)
             {
-                var result = _context.SmallListings
-                //.Join(_context.Listings, sL => sL.Id, l => l.Id, (sl, l) => new { sl, l })
-                .Select(i => new SmallListings
+                var result = _context.SummaryListings
+                .Join(_context.Listings, sL => sL.Id, l => l.Id, (sl, l) => new { sl, l })
+                .Select(i => new SummaryListings
                 {
-                    Id = i.Id,
-                    Name = i.Name,
-                    Longitude = i.Longitude,
-                    Latitude = i.Latitude,
-                    Price = i.Price,
-                    ThumbnailUrl = i.ThumbnailUrl,
-                    Description = i.Description,
-                    Neighbourhood = i.Neighbourhood,
-                    ReviewScoresRating = i.ReviewScoresRating
+                    Id = i.sl.Id,
+                    Name = i.sl.Name,
+                    Longitude = i.sl.Longitude,
+                    Latitude = i.sl.Latitude,
+                    HostName = i.sl.HostName,
+                    Neighbourhood = i.sl.Neighbourhood,
+                    Price = i.sl.Price,
+                    Rating = i.l.ReviewScoresRating
 
                 });
 
@@ -44,19 +43,18 @@ namespace Airbnb_v3.Repositories
             else
             {
 
-                var result = _context.SmallListings
-                //.Join(_context.Listings, sL => sL.Id, l => l.Id, (sl, l) => new { sl, l })
-                .Select(i => new SmallListings
+                var result = _context.SummaryListings
+                .Join(_context.Listings, sL => sL.Id, l => l.Id, (sl, l) => new { sl, l })
+                .Select(i => new SummaryListings
                 {
-                    Id = i.Id,
-                    Name = i.Name,
-                    Longitude = i.Longitude,
-                    Latitude = i.Latitude,
-                    Price = i.Price.Substring(1, i.Price.Length - 3),
-                    ThumbnailUrl = i.ThumbnailUrl,
-                    Description = i.Description,
-                    Neighbourhood = i.Neighbourhood,
-                    ReviewScoresRating = i.ReviewScoresRating
+                    Id = i.sl.Id,
+                    Name = i.sl.Name,
+                    Longitude = i.sl.Longitude,
+                    Latitude = i.sl.Latitude,
+                    HostName = i.sl.HostName,
+                    Neighbourhood = i.sl.Neighbourhood,
+                    Price = i.sl.Price,
+                    Rating = i.l.ReviewScoresRating
                 });
 
                 if (filters.Neighbourhood != null)
@@ -67,20 +65,20 @@ namespace Airbnb_v3.Repositories
 
                 if (filters.MinPrice > 0 && filters.MaxPrice > 0)
                 {
-                    result = result.Where(l => Int32.Parse(l.Price) > filters.MinPrice && Int32.Parse(l.Price) < filters.MaxPrice);
+                    result = result.Where(l => l.Price > filters.MinPrice && l.Price < filters.MaxPrice);
                 }
                 else if (filters.MinPrice > 0 && filters.MaxPrice == 0)
                 {
-                    result = result.Where(l => Int32.Parse(l.Price) > filters.MinPrice);
+                    result = result.Where(l => l.Price > filters.MinPrice);
                 }
                 else if (filters.MinPrice == 0 && filters.MaxPrice > 0)
                 {
-                    result = result.Where(l => Int32.Parse(l.Price) < filters.MaxPrice);
+                    result = result.Where(l => l.Price < filters.MaxPrice);
                 }
 
                 if (filters.MinRating > 0)
                 {
-                    result = result.Where(l => l.ReviewScoresRating > filters.MinRating);
+                    result = result.Where(l => l.Rating > filters.MinRating);
                 }
                 return result;
 

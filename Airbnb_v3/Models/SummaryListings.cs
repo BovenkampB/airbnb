@@ -21,5 +21,6 @@ namespace Airbnb_v3.Models
         public double? ReviewsPerMonth { get; set; }
         public int? CalculatedHostListingsCount { get; set; }
         public int? Availability365 { get; set; }
+        public int? Rating { get; internal set; }
     }
 }

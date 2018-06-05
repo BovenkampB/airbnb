@@ -1024,23 +1024,23 @@
         });
     }
 
-    fetch('http://localhost:9001/Neighbourhoods/GetNeighbourhoods')
-        .then((resp) => resp.json())
-        .then(function (data) {
-            for (var i = 0; i < data.length; i++) {
-                console.log(data[i].neighbourhood);
+    //fetch('http://localhost:9001/Neighbourhoods/GetNeighbourhoods')
+    //    .then((resp) => resp.json())
+    //    .then(function (data) {
+    //        for (var i = 0; i < data.length; i++) {
+    //            console.log(data[i].neighbourhood);
 
-                var para = document.createElement("option");
-                para.setAttribute("Value", data[i].neighbourhood);
-                var node = document.createTextNode(data[i].neighbourhood);
-                para.appendChild(node);
+    //            var para = document.createElement("option");
+    //            para.setAttribute("Value", data[i].neighbourhood);
+    //            var node = document.createTextNode(data[i].neighbourhood);
+    //            para.appendChild(node);
 
-                var element = document.getElementById("selectNeighbourhood");
-                element.appendChild(para);
+    //            var element = document.getElementById("selectNeighbourhood");
+    //            element.appendChild(para);
 
 
-            }
-        });
+    //        }
+    //    });
 
 //    function buildLocationList(data) {
 //  // Iterate through the list of listings
