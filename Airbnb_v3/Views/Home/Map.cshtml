@@ -21,10 +21,10 @@
     <form asp-controller="Listings" asp-action="Filter" method="post">
         <label asp-for="filters.Neighbourhood"></label>
         @Html.DropDownListFor(model => model.filters.Neighbourhood, new SelectList(
-             Model.neighbourhoods,
-             "Neighbourhood",
-             "Neighbourhood",
-             0), "-- Please select --")
+                  Model.neighbourhoods,
+                  "Neighbourhood",
+                  "Neighbourhood",
+                  0), "-- Please select --")
 
         <label asp-for="filters.MinPrice">Minimum price per night:</label>
 
@@ -110,3 +110,6 @@
 <script type="text/javascript" src="~/js/Charts.js"></script>
 <script type="text/javascript" src="~/js/MapBox.js"></script>
 <link rel="stylesheet" type="text/css" href="~/css/MapBox.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+
