@@ -6,7 +6,10 @@ var map = new mapboxgl.Map({
     zoom: 11 // starting zoom
 });
 
+
 map.addControl(new mapboxgl.NavigationControl());
+
+
 
 fetch('http://localhost:9001/Listings/GetListings')
     .then((resp) => resp.json())
@@ -36,7 +39,8 @@ fetch('http://localhost:9001/Listings/GetListings')
                     price: data[i].price,
                     description: data[i].description,
                     neighbourhood: data[i].neighbourhood,
-                    reviewscoresrating: data[i].reviewscoresrating
+                    reviewscoresrating: data[i].reviewscoresrating,
+                    availability: data[i].availability
                 }
             }
 
@@ -124,5 +128,35 @@ function loadGeoJSON(geojson) {
             .setLngLat(coordinates)
             .setHTML('<h3>' + e.features[0].properties.name + '</h3> <br/> <img src=\"' + e.features[0].properties.thumbnailurl + '\" alt="Thumbnail" height="144" width="216" /> <p>' + e.features[0].properties.price + '</p><p> <a href="http://localhost:9001/Listings/Details/ ' + e.features[0].properties.id + '">Toon meer details</a></p>')
             .addTo(map);
+
+
+
+        var availabilityChart = document.getElementById('myChart').getContext('2d');
+
+        var dataAvailability = {
+            datasets: [{
+                data: [e.features[0].properties.availability, 365 - e.features[0].properties.availability],
+                backgroundColor: ['rgb(0, 255, 0)', 'rgb(255, 0, 0)'],
+            }],
+
+            // These labels appear in the legend and in the tooltips when hovering different arcs
+            labels: [
+                'Available',
+                'Not available'
+            ]
+        };
+
+        var availableChart = new Chart(availabilityChart, {
+            type: 'pie',
+            data: dataAvailability,
+            options: {
+                title: {
+                    display: true,
+                    text: 'Availability per year'
+                }
+            }
+        });
     });
 }
+
+
