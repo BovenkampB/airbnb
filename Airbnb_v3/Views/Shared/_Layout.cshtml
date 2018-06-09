@@ -34,8 +34,6 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                     <li><a asp-area="" asp-controller="Listings" asp-action="Index">Map</a></li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
@@ -46,7 +44,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2018 - Airbnb_v3</p>
+            <p>&copy; 2018 - Airbnb Bart van de Bovenkamp</p>
         </footer>
     </div>
 
