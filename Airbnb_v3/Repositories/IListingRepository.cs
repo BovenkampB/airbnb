@@ -9,5 +9,6 @@ namespace Airbnb_v3.Repositories
         IEnumerable GetListings(ListingsFilters filters);
         IEnumerable GetNeighbourHoods();
 
+        IEnumerable getReviewsPerYear(int id);
     }
 }

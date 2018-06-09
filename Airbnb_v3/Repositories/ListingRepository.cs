@@ -34,7 +34,8 @@ namespace Airbnb_v3.Repositories
                     HostName = i.sl.HostName,
                     Neighbourhood = i.sl.Neighbourhood,
                     Price = i.sl.Price,
-                    Rating = i.l.ReviewScoresRating
+                    Rating = i.l.ReviewScoresRating,
+                    Availability365 = i.l.Availability365
 
                 });
 
@@ -54,7 +55,8 @@ namespace Airbnb_v3.Repositories
                     HostName = i.sl.HostName,
                     Neighbourhood = i.sl.Neighbourhood,
                     Price = i.sl.Price,
-                    Rating = i.l.ReviewScoresRating
+                    Rating = i.l.ReviewScoresRating,
+                    Availability365 = i.l.Availability365
                 });
 
                 if (filters.Neighbourhood != null)
@@ -91,6 +93,20 @@ namespace Airbnb_v3.Repositories
             {
                 Neighbourhood = i.Neighbourhood
             });
+
+            return result;
+        }
+
+        public IEnumerable getReviewsPerYear(int id)
+        {
+            var result = _context.ReviewPerYear
+                .Where(l => l.Id == id)
+                .Select(i => new ReviewPerYear
+                {
+                    Id = i.Id,
+                    Year = i.Year,
+                    NumberOfReviews = i.NumberOfReviews
+                });
 
             return result;
         }

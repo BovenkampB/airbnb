@@ -14,6 +14,8 @@ namespace Airbnb_v3.Models
         public virtual DbSet<SummaryListings> SummaryListings { get; set; }
         public virtual DbSet<SummaryReviews> SummaryReviews { get; set; }
         public virtual DbSet<SmallListings> SmallListings { get; set; }
+        public virtual DbSet<ReviewPerYear> ReviewPerYear { get; set; }
+
 
         //Constructor which allows configuration to be passed into the context by DI
         public AirBNBContext(DbContextOptions<AirBNBContext> options) : base(options)
@@ -417,6 +419,18 @@ namespace Airbnb_v3.Models
                 entity.Property(e => e.ListingId).HasColumnName("listing_id");
 
                 entity.Property(e => e.Date).HasColumnName("date");
+            });
+
+            modelBuilder.Entity<ReviewPerYear>(entity =>
+            {
+                entity.HasKey(e => new { e.Id });
+
+                entity.ToTable("AantalReviewsPerYear");
+
+                entity.Property(e => e.Id).HasColumnName("listing_id");
+
+                entity.Property(e => e.Year).HasColumnName("jaar");
+                entity.Property(e => e.NumberOfReviews).HasColumnName("aantalReviews");
             });
         }
     }

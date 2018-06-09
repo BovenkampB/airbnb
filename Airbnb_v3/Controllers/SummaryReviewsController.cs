@@ -6,16 +6,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Airbnb_v3.Models;
+using Airbnb_v3.Repositories;
+using System.Collections;
 
 namespace Airbnb_v3.Controllers
 {
     public class SummaryReviewsController : Controller
     {
         private readonly AirBNBContext _context;
+        private readonly IListingRepository _listingsRepository;
 
-        public SummaryReviewsController(AirBNBContext context)
+        public SummaryReviewsController(AirBNBContext context, IListingRepository listingRepository)
         {
             _context = context;
+            _listingsRepository = listingRepository;
         }
 
         // GET: SummaryReviews
@@ -147,6 +151,14 @@ namespace Airbnb_v3.Controllers
         private bool SummaryReviewsExists(int id)
         {
             return _context.SummaryReviews.Any(e => e.ListingId == id);
+        }
+
+        [HttpGet]
+        public IEnumerable getReviewsPerYear(int id)
+        {
+            var result = _listingsRepository.getReviewsPerYear(id);
+
+            return result;
         }
     }
 }

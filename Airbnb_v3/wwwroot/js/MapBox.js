@@ -40,7 +40,7 @@ fetch('http://localhost:9001/Listings/GetListings')
                     description: data[i].description,
                     neighbourhood: data[i].neighbourhood,
                     reviewscoresrating: data[i].reviewscoresrating,
-                    availability: data[i].availability
+                    availability: data[i].availability365
                 }
             }
 
@@ -130,6 +130,7 @@ function loadGeoJSON(geojson) {
             .addTo(map);
 
 
+        getCharts(e.features[0].properties.id);
 
         var availabilityChart = document.getElementById('myChart').getContext('2d');
 
@@ -159,4 +160,49 @@ function loadGeoJSON(geojson) {
     });
 }
 
+function getCharts(e) {
+    fetch("http://localhost:9001/SummaryReviews/getReviewsPerYear?id=" + e)
+        .then((resp) => resp.json())
+        .then(function (data) {
 
+            var yearObject = [];
+            var reviewsObject = [];
+
+            for (i = 0; i < data.length; i++) {
+                yearObject.push(data[i].year);
+                reviewsObject.push(data[i].numberOfReviews);
+            }
+
+            var reviewPerYear = document.getElementById('reviewPerYear').getContext('2d');
+
+            var dataReviews = {
+                datasets: [{
+                    label: 'Reviews per year',
+                    data: reviewsObject
+                }],
+
+                // These labels appear in the legend and in the tooltips when hovering different arcs
+                labels: yearObject
+            };
+
+
+
+            var reviewsPerYear = new Chart(reviewPerYear, {
+                type: 'bar',
+                data: dataReviews,
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+                    title: {
+                        display: true,
+                        text: 'Reviews per year'
+                    }
+                }
+            });
+        });
+}
