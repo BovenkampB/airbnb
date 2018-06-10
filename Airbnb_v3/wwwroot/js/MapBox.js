@@ -1,11 +1,14 @@
-﻿mapboxgl.accessToken = 'pk.eyJ1IjoiYm92ZW5rYW1wYiIsImEiOiJjamc2OWkyN24xcmxnMzNtbzY1ZmlpMXk5In0.wZO5EUCXogq6QJS7p_xUUg';
+﻿createAvgPricePerNeighbourhoodChart();
+createAvgRatingPerNeighbourhoodChart();
+
+
+mapboxgl.accessToken = 'pk.eyJ1IjoiYm92ZW5rYW1wYiIsImEiOiJjamc2OWkyN24xcmxnMzNtbzY1ZmlpMXk5In0.wZO5EUCXogq6QJS7p_xUUg';
 var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/bovenkampb/cjh911gie1leh2rlo81r9bs4x',
     center: [4.9, 52.36], // starting position [lng, lat]
     zoom: 11 // starting zoom
 });
-
 
 map.addControl(new mapboxgl.NavigationControl());
 
@@ -15,7 +18,6 @@ fetch('http://localhost:9001/Listings/GetListings')
     .then((resp) => resp.json())
     .then(function (data) {
         var geojson = { features: [] }
-
         for (var i = 0; i < data.length; i++) {
             var longtitudestring = String(data[i].longitude);
             longtitudestring = longtitudestring.replace(".", "");
@@ -130,9 +132,9 @@ function loadGeoJSON(geojson) {
             .addTo(map);
 
 
-        getCharts(e.features[0].properties.id);
+        createLocationSpecificCharts(e.features[0].properties.id);
 
-        var availabilityChart = document.getElementById('myChart').getContext('2d');
+        var availabilityChart = document.getElementById('availabilityPerYear').getContext('2d');
 
         var dataAvailability = {
             datasets: [{
@@ -160,7 +162,7 @@ function loadGeoJSON(geojson) {
     });
 }
 
-function getCharts(e) {
+function createLocationSpecificCharts(e) {
     fetch("http://localhost:9001/SummaryReviews/getReviewsPerYear?id=" + e)
         .then((resp) => resp.json())
         .then(function (data) {
@@ -206,3 +208,96 @@ function getCharts(e) {
             });
         });
 }
+
+function createAvgPricePerNeighbourhoodChart() {
+        fetch("http://localhost:9001/Listings/getAveragePricePerNeighbourhood")
+            .then((resp) => resp.json())
+            .then(function (data) {
+
+                var neighbourhoodObject = [];
+                var priceObject = [];
+
+                for (i = 0; i < data.length; i++) {
+                    neighbourhoodObject.push(data[i].neighbourhood);
+                    priceObject.push(data[i].price);
+                }
+
+                var pricePerNeighbourhood = document.getElementById('averagePricePerNeighbourhood').getContext('2d');
+
+                var dataPrices = {
+                    datasets: [{
+                        label: 'Average price per neighbourhood',
+                        data: priceObject
+                    }],
+
+                    // These labels appear in the legend and in the tooltips when hovering different arcs
+                    labels: neighbourhoodObject
+                };
+
+                var reviewsPerYear = new Chart(pricePerNeighbourhood, {
+                    type: 'bar',
+                    data: dataPrices,
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: false
+                                }
+                            }]
+                        },
+                        title: {
+                            display: true,
+                            text: 'Reviews per year'
+                        }
+                    }
+                });
+            });
+}
+
+
+function createAvgRatingPerNeighbourhoodChart() {
+    fetch("http://localhost:9001/Listings/getAverageRatingPerNeighbourhood")
+        .then((resp) => resp.json())
+        .then(function (data) {
+
+            var neighbourhoodObject = [];
+            var ratingObject = [];
+
+            for (i = 0; i < data.length; i++) {
+                neighbourhoodObject.push(data[i].neighbourhood);
+                ratingObject.push(data[i].rating);
+            }
+
+            var ratingPerNeighbourhood = document.getElementById('averageRatingPerNeighbourhood').getContext('2d');
+
+            var dataRatings = {
+                datasets: [{
+                    label: 'Average rating per neighbourhood',
+                    data: ratingObject
+                }],
+
+                // These labels appear in the legend and in the tooltips when hovering different arcs
+                labels: neighbourhoodObject
+            };
+
+            var reviewsPerYear = new Chart(ratingPerNeighbourhood, {
+                type: 'bar',
+                data: dataRatings,
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: false
+                            }
+                        }]
+                    },
+                    title: {
+                        display: true,
+                        text: 'Average rating per year'
+                    }
+                }
+            });
+        });
+}
+
+

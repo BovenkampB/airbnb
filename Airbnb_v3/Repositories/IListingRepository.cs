@@ -10,5 +10,8 @@ namespace Airbnb_v3.Repositories
         IEnumerable GetNeighbourHoods();
 
         IEnumerable getReviewsPerYear(int id);
+        IEnumerable getAveragePricePerNeighbourhood();
+        IEnumerable getAverageRatingPerNeighbourhood();
     }
+
 }

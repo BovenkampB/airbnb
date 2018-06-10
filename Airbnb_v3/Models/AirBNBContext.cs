@@ -16,7 +16,9 @@ namespace Airbnb_v3.Models
         public virtual DbSet<SmallListings> SmallListings { get; set; }
         public virtual DbSet<ReviewPerYear> ReviewPerYear { get; set; }
 
-
+        public virtual DbSet<AveragePricePerNeighbourhood> AveragePricePerNeighbourhood { get; set; }
+        public virtual DbSet<AverageRatingPerNeighbourhood> AverageRatingPerNeighbourhood { get; set; }
+        
         //Constructor which allows configuration to be passed into the context by DI
         public AirBNBContext(DbContextOptions<AirBNBContext> options) : base(options)
         {
@@ -431,6 +433,29 @@ namespace Airbnb_v3.Models
 
                 entity.Property(e => e.Year).HasColumnName("jaar");
                 entity.Property(e => e.NumberOfReviews).HasColumnName("aantalReviews");
+            });
+
+            modelBuilder.Entity<AveragePricePerNeighbourhood>(entity =>
+            {
+                entity.HasKey(e => new { e.Id });
+
+                entity.ToTable("price_per_neighbourhood");
+
+                entity.Property(e => e.Id).HasColumnName("neighbourhood");
+
+                entity.Property(e => e.Price).HasColumnName("price");
+            });
+
+            modelBuilder.Entity<AverageRatingPerNeighbourhood>(entity =>
+            {
+                entity.HasKey(e => new { e.Id });
+
+                entity.ToTable("review_per_neighbourhood");
+
+                entity.Property(e => e.Id).HasColumnName("listing_id");
+
+                entity.Property(e => e.Neighbourhood).HasColumnName("neighbourhood_cleansed");
+                entity.Property(e => e.Rating).HasColumnName("review");
             });
         }
     }

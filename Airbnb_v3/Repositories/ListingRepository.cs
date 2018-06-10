@@ -110,5 +110,29 @@ namespace Airbnb_v3.Repositories
 
             return result;
         }
+
+        public IEnumerable getAveragePricePerNeighbourhood()
+        {
+            var result = _context.AveragePricePerNeighbourhood
+                .Select(i => new AveragePricePerNeighbourhood
+                {
+                    Neighbourhood = i.Neighbourhood,
+                    Price = i.Price
+                });
+
+            return result;
+        }
+
+        public IEnumerable getAverageRatingPerNeighbourhood()
+        {
+            var result = _context.AverageRatingPerNeighbourhood
+               .Select(i => new AverageRatingPerNeighbourhood
+               {
+                   Neighbourhood = i.Neighbourhood,
+                   Rating = i.Rating
+               });
+
+            return result;
+        }
     }
 }

@@ -237,5 +237,21 @@ namespace Airbnb_v3.Controllers
             listingFilters = null;
             return Redirect("../Listings");
         }
+
+        [HttpGet]
+        public IEnumerable getAveragePricePerNeighbourhood()
+        {
+            var result = _repo.getAveragePricePerNeighbourhood();
+
+            return result;
+        }
+
+        [HttpGet]
+        public IEnumerable getAverageRatingPerNeighbourhood()
+        {
+            var result = _repo.getAverageRatingPerNeighbourhood();
+
+            return result;
+        }
     }
 }

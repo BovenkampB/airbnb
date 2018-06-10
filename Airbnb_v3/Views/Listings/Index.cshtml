@@ -16,40 +16,6 @@
 
 <h2>Map</h2>
 
-
-@*Oude filter form*@
-@*<div class='sidebar'>
-        <div class='heading'>
-            <h1>Our locations</h1>
-        </div>
-        <div id='listings' class='listings'></div>
-    </div>
-    <form asp-controller="Listings" asp-action="Filter" method="post">
-        <div class="form-row">
-            <div class="col-lg-3 form-group">
-                <label>Wijk</label>
-                <select id="selectNeighbourhood" name="NeighbourhoodFilter" class="form-control"></select>
-            </div>
-            <div class="col-lg-3">
-                <label>Zoekterm</label>
-                <input type="text" class="form-control" />
-            </div>
-            <div class="col-lg-3">
-                <label>Prijs van:</label>
-                <input type="number" class="form-control" min="50" max="99998" />
-                <label>tot:</label>
-                <input type="number" class="form-control" min="51" max="99999" />
-            </div>
-            <div class="col-lg-3">
-                <label>Beoordeling van:</label>
-                <input type="number" class="form-control" min="1" max="5" />
-                <label>tot:</label>
-                <input type="number" class="form-control" min="1" max="5" />
-            </div>
-        </div>
-        <div class="form-row"><input type="button" value="Zoeken" asp-controller="ListingsController" asp-action="GetListingsWithFilter" asp-route-id="selectNeighbourhood.Value" class="form-control btn-primary" /></div>
-    </form>*@
-
 <div class="row">
     <div class="col-lg-8">
         <div id='map' style='width: 800px; height: 600px;'></div>
@@ -68,26 +34,32 @@
                     <div class="panel-body">
                         <div id="filters">
                             <form asp-controller="Listings" asp-action="Filter" method="post">
-                                <label asp-for="filters.Neighbourhood"></label>
+                                <label class="col-sm-8" asp-for="filters.Neighbourhood"></label>
                                 @Html.DropDownListFor(model => model.filters.Neighbourhood, new SelectList(
-                                                         Model.neighbourhoods,
-                                                         "Neighbourhood",
-                                                         "Neighbourhood",
-                                                         0), "-- Please select --")
+                                                              Model.neighbourhoods,
+                                                              "Neighbourhood",
+                                                              "Neighbourhood",
+                                                              0), "-- Please select --")
 
-                                <label asp-for="filters.MinPrice">Minimum price per night:</label>
+                                <label class="col-sm-8" asp-for="filters.MinPrice">Minimum price per night:</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" asp-for="filters.MinPrice" type="number" name="filters.MinPrice" value="@minPrice" />
+                                </div>
 
-                                <input asp-for="filters.MinPrice" type="number" name="filters.MinPrice" value="@minPrice" />
-
-
-                                <label asp-for="filters.MaxPrice">Maximum price per night:</label>
-                                <input asp-for="filters.MaxPrice" type="number" name="filters.MaxPrice" value="@maxPrice" />
+                                <label class="col-sm-8 control-label" asp-for="filters.MaxPrice">Maximum price per night:</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" asp-for="filters.MaxPrice" type="number" name="filters.MaxPrice" value="@maxPrice" />
+                                </div>
                                 <br />
-                                <label asp-for="filters.MinRating">Minimum rating:</label>
-                                <br />
-                                <input asp-for="filters.MinRating" type="number" name="filters.MinRating" value="@minRating" />
-                                <br />
-                                <input type="submit" value="Filter" />
+                                <label class="col-sm-8 control-label" asp-for="filters.MinRating">Minimum rating:</label>
+                                    <br />
+                                    <div class="col-sm-8">
+                                        <input class="form-control" asp-for="filters.MinRating" type="number" name="filters.MinRating" value="@minRating" />
+                                    </div>
+                                    <br />
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="submit" value="Filter" />
+                                </div>
                             </form>
                             @{
                                 if (Model.filters != null)
@@ -113,7 +85,9 @@
                                         <p>Minimum Rating: @Model.filters.MinRating</p>
                                     }
                                     <form asp-controller="Listings" asp-action="ClearFilter" method="get">
-                                        <input type="submit" value="ClearFilters" />
+                                        <div class="col-sm-8">
+                                            <input class="form-control" type="submit" value="Reset alle filters" />
+                                        </div>
                                     </form>
                                 }
                             }
@@ -132,10 +106,8 @@
                 </div>
                 <div id="collapse2" class="panel-collapse collapse">
                     <div class="panel-body">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                        minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo consequat.
+                        <canvas id="averagePricePerNeighbourhood"></canvas>
+                        <canvas id="averageRatingPerNeighbourhood"></canvas>
                     </div>
                 </div>
             </div>
@@ -149,7 +121,7 @@
                 </div>
                 <div id="collapse3" class="panel-collapse collapse">
                     <div class="panel-body">
-                        <canvas id="myChart"></canvas>
+                        <canvas id="availabilityPerYear"></canvas>
                         <canvas id="reviewPerYear"></canvas>
                     </div>
                 </div>
