@@ -217,7 +217,7 @@ namespace Airbnb_v3.Controllers
             return result;
         }
 
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Index()
         {
             IEnumerable<Neighbourhoods> neighbourhoods = (IEnumerable<Neighbourhoods>)_repo.GetNeighbourHoods();

@@ -5,7 +5,7 @@
       <ThinkProfile Value="0" Pattern="Off" />
       <LoadProfile Pattern="Constant" InitialUsers="25" />
       <TestMix>
-        <TestProfile Name="Basic_browsing_with_authentication" Path="bin\debug\basic_browsing_with_authentication.webtest" Id="7caa3cf8-b12d-4898-9a01-feef9a67d9fc" Percentage="100" Type="Microsoft.VisualStudio.TestTools.WebStress.DeclarativeWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+        <TestProfile Name="Webtest_excluding_logging_in" Path="webtest_excluding_logging_in.webtest" Id="2a6c56fe-7e44-4c44-a555-8137a92e4c8b" Percentage="100" Type="Microsoft.VisualStudio.TestTools.WebStress.DeclarativeWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
       </TestMix>
       <BrowserMix>
         <BrowserProfile Percentage="100">
