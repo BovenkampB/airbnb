@@ -55,7 +55,27 @@ namespace Airbnb_v3
             services.AddTransient<IEmailSender, EmailSender>();
 
             // Add framework services.
-            services.AddMvc();
+            //services.AddMvc();
+
+            services.AddMvc(config =>
+            {
+                config.Filters.Add(new RequireHttpsAttribute());
+            });
+
+            //services.AddHsts(options =>
+            //{
+            //    options.Preload = true;
+            //    options.IncludeSubDomains = true;
+            //    options.MaxAge = TimeSpan.FromDays(60);
+            //    options.ExcludedHosts.Add("example.com");
+            //    options.ExcludedHosts.Add("www.example.com");
+            //});
+
+            //services.AddHttpsRedirection(options =>
+            //{
+            //    options.RedirectStatusCode = StatusCodes.Status301MovedPermanently;
+            //    options.HttpsPort = 5001;
+            //});
 
             //ConnectionString is now retreived from appsettings.json
             services.AddDbContext<AirBNBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Airbnb")));
@@ -74,12 +94,15 @@ namespace Airbnb_v3
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+                //app.UseHsts();
             }
 
             // Make use of HTTPS instead of HTTP
             //var options = new RewriteOptions().AddRedirectToHttps();
 
             //app.UseRewriter(options);
+
+            //app.UseHttpsRedirection();
 
             app.UseStaticFiles();
 
