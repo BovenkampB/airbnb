@@ -1,0 +1,180 @@
+{
+  "Timestamp": "2018-06-13T22:05:38.4089059Z",
+  "TestResult": {
+    "TotalRequests": 2029,
+    "ThreadCount": 25,
+    "FailedRequests": 231,
+    "SuccessRequests": 1798,
+    "RequestsPerSecond": 6.7633333333333333333333333333,
+    "AvgRequestTimeMs": 1890.48891079349,
+    "MinRequestTimeMs": 0.0,
+    "MaxRequestTimeMs": 17805.0,
+    "TimeTakenSecs": 300,
+    "ErrorMessages": [
+      {
+        "Message": "CheckSite Error: The operation has timed out",
+        "Count": 112
+      },
+      {
+        "Message": "CheckSite Error: The request was aborted: The operation has timed out.",
+        "Count": 118
+      },
+      {
+        "Message": "CheckSite Error: The operation has timed out.",
+        "Count": 1
+      }
+    ]
+  },
+  "UrlSummary": [
+    {
+      "Url": "GET http://localhost:9001/Listings/getAveragePricePerNeighbourhood",
+      "HttpVerb": null,
+      "Results": {
+        "TotalRequests": 413,
+        "ThreadCount": 0,
+        "FailedRequests": 25,
+        "SuccessRequests": 388,
+        "RequestsPerSecond": 1.3766666666666666666666666667,
+        "AvgRequestTimeMs": 1710.76997578692,
+        "MinRequestTimeMs": 0.0,
+        "MaxRequestTimeMs": 14135.0,
+        "TimeTakenSecs": 300,
+        "ErrorMessages": [
+          {
+            "Message": "CheckSite Error: The request was aborted: The operation has timed out.",
+            "Count": 25
+          }
+        ]
+      }
+    },
+    {
+      "Url": "GET http://localhost:9001/Listings/GetListings",
+      "HttpVerb": null,
+      "Results": {
+        "TotalRequests": 412,
+        "ThreadCount": 0,
+        "FailedRequests": 24,
+        "SuccessRequests": 388,
+        "RequestsPerSecond": 1.3733333333333333333333333333,
+        "AvgRequestTimeMs": 1843.09223300971,
+        "MinRequestTimeMs": 0.0,
+        "MaxRequestTimeMs": 12811.0,
+        "TimeTakenSecs": 300,
+        "ErrorMessages": [
+          {
+            "Message": "CheckSite Error: The request was aborted: The operation has timed out.",
+            "Count": 24
+          }
+        ]
+      }
+    },
+    {
+      "Url": "GET http://localhost:9001/Listings/getAverageRatingPerNeighbourhood",
+      "HttpVerb": null,
+      "Results": {
+        "TotalRequests": 405,
+        "ThreadCount": 0,
+        "FailedRequests": 9,
+        "SuccessRequests": 396,
+        "RequestsPerSecond": 1.35,
+        "AvgRequestTimeMs": 1478.44444444444,
+        "MinRequestTimeMs": 0.0,
+        "MaxRequestTimeMs": 17805.0,
+        "TimeTakenSecs": 300,
+        "ErrorMessages": [
+          {
+            "Message": "CheckSite Error: The operation has timed out.",
+            "Count": 1
+          },
+          {
+            "Message": "CheckSite Error: The request was aborted: The operation has timed out.",
+            "Count": 8
+          }
+        ]
+      }
+    },
+    {
+      "Url": "POST http://localhost:9001/Listings/Filter",
+      "HttpVerb": null,
+      "Results": {
+        "TotalRequests": 346,
+        "ThreadCount": 0,
+        "FailedRequests": 111,
+        "SuccessRequests": 235,
+        "RequestsPerSecond": 1.1533333333333333333333333333,
+        "AvgRequestTimeMs": 2763.26589595376,
+        "MinRequestTimeMs": 0.0,
+        "MaxRequestTimeMs": 15714.0,
+        "TimeTakenSecs": 300,
+        "ErrorMessages": [
+          {
+            "Message": "CheckSite Error: The operation has timed out",
+            "Count": 111
+          }
+        ]
+      }
+    },
+    {
+      "Url": "GET http://localhost:9001/Listings",
+      "HttpVerb": null,
+      "Results": {
+        "TotalRequests": 339,
+        "ThreadCount": 0,
+        "FailedRequests": 60,
+        "SuccessRequests": 279,
+        "RequestsPerSecond": 1.13,
+        "AvgRequestTimeMs": 1903.93215339233,
+        "MinRequestTimeMs": 0.0,
+        "MaxRequestTimeMs": 12958.0,
+        "TimeTakenSecs": 300,
+        "ErrorMessages": [
+          {
+            "Message": "CheckSite Error: The request was aborted: The operation has timed out.",
+            "Count": 59
+          },
+          {
+            "Message": "CheckSite Error: The operation has timed out",
+            "Count": 1
+          }
+        ]
+      }
+    },
+    {
+      "Url": "GET http://localhost:9001/SummaryReviews/getReviewsPerYear?id=7769055",
+      "HttpVerb": null,
+      "Results": {
+        "TotalRequests": 57,
+        "ThreadCount": 0,
+        "FailedRequests": 2,
+        "SuccessRequests": 55,
+        "RequestsPerSecond": 0.19,
+        "AvgRequestTimeMs": 1304.40350877193,
+        "MinRequestTimeMs": 0.0,
+        "MaxRequestTimeMs": 4029.0,
+        "TimeTakenSecs": 300,
+        "ErrorMessages": [
+          {
+            "Message": "CheckSite Error: The request was aborted: The operation has timed out.",
+            "Count": 2
+          }
+        ]
+      }
+    },
+    {
+      "Url": "GET http://localhost:9001/",
+      "HttpVerb": null,
+      "Results": {
+        "TotalRequests": 57,
+        "ThreadCount": 0,
+        "FailedRequests": 0,
+        "SuccessRequests": 57,
+        "RequestsPerSecond": 0.19,
+        "AvgRequestTimeMs": 1671.15789473684,
+        "MinRequestTimeMs": 979.0,
+        "MaxRequestTimeMs": 14013.0,
+        "TimeTakenSecs": 300,
+        "ErrorMessages": []
+      }
+    }
+  ]
+}
