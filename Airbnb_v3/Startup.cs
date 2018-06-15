@@ -55,12 +55,12 @@ namespace Airbnb_v3
             services.AddTransient<IEmailSender, EmailSender>();
 
             // Add framework services.
-            //services.AddMvc();
+            services.AddMvc();
 
-            services.AddMvc(config =>
-            {
-                config.Filters.Add(new RequireHttpsAttribute());
-            });
+            //services.AddMvc(config =>
+            //{
+            //    config.Filters.Add(new RequireHttpsAttribute());
+            //});
 
             //services.AddHsts(options =>
             //{
