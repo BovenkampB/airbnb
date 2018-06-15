@@ -57,6 +57,9 @@ namespace Airbnb_v3
             // Add framework services.
             services.AddMvc();
 
+            services.AddMemoryCache();
+
+
             //services.AddMvc(config =>
             //{
             //    config.Filters.Add(new RequireHttpsAttribute());

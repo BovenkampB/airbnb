@@ -4,17 +4,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Airbnb_v3.Models;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Airbnb_v3.Repositories
 {
     public class ListingRepository : IListingRepository
     {
+        private IMemoryCache _cache;
 
         private AirBNBContext _context;
 
-        public ListingRepository(AirBNBContext context)
+        public ListingRepository(AirBNBContext context, IMemoryCache cache)
         {
             _context = context;
+            _cache = cache;
         }
         public IEnumerable GetListings(ListingsFilters filters)
         {
