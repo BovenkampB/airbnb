@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27604.0
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airbnb_v3", "Airbnb_v3\Airbnb_v3.csproj", "{3759C5A3-BF3F-4FD0-955B-487895E777BD}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAndLoadTestAirBnb", "WebAndLoadTestAirBnb\WebAndLoadTestAirBnb.csproj", "{A95F6BD3-8E43-4D8B-9D6C-BCCCC956684A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{20C4D2C2-260A-4B03-B3AC-D54BE99DE17B}"
 	ProjectSection(SolutionItems) = preProject
@@ -22,10 +20,6 @@ Global
 		{3759C5A3-BF3F-4FD0-955B-487895E777BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3759C5A3-BF3F-4FD0-955B-487895E777BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3759C5A3-BF3F-4FD0-955B-487895E777BD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A95F6BD3-8E43-4D8B-9D6C-BCCCC956684A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A95F6BD3-8E43-4D8B-9D6C-BCCCC956684A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A95F6BD3-8E43-4D8B-9D6C-BCCCC956684A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A95F6BD3-8E43-4D8B-9D6C-BCCCC956684A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
