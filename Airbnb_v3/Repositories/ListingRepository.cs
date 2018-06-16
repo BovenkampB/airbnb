@@ -21,26 +21,34 @@ namespace Airbnb_v3.Repositories
         }
         public IEnumerable GetListings(ListingsFilters filters)
         {
-
-
-
             if (filters == null)
             {
-                var result = _context.SummaryListings
-                .Join(_context.Listings, sL => sL.Id, l => l.Id, (sl, l) => new { sl, l })
-                .Select(i => new SummaryListings
+                IQueryable<SummaryListings> result;
+                IQueryable<SummaryListings> outvar;
+                if (!_cache.TryGetValue("listings", out outvar))
                 {
-                    Id = i.sl.Id,
-                    Name = i.sl.Name,
-                    Longitude = i.sl.Longitude,
-                    Latitude = i.sl.Latitude,
-                    HostName = i.sl.HostName,
-                    Neighbourhood = i.sl.Neighbourhood,
-                    Price = i.sl.Price,
-                    Rating = i.l.ReviewScoresRating,
-                    Availability365 = i.l.Availability365
+                    result = _context.SummaryListings
+                    .Join(_context.Listings, sL => sL.Id, l => l.Id, (sl, l) => new { sl, l })
+                    .Select(i => new SummaryListings
+                    {
+                        Id = i.sl.Id,
+                        Name = i.sl.Name,
+                        Longitude = i.sl.Longitude,
+                        Latitude = i.sl.Latitude,
+                        HostName = i.sl.HostName,
+                        Neighbourhood = i.sl.Neighbourhood,
+                        Price = i.sl.Price,
+                        Rating = i.l.ReviewScoresRating,
+                        Availability365 = i.l.Availability365
 
-                });
+                    });
+                    _cache.Set("listings", result, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(5)).SetAbsoluteExpiration(TimeSpan.FromHours(24)));
+                }
+                else
+                {
+                    result = outvar;
+                    Console.WriteLine("SERVED FROM CACHE!!!!!!!");
+                }
 
                 return result;
             }
