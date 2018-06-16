@@ -1,0 +1,137 @@
+﻿@using Airbnb_gcp.ViewModels;
+
+@{
+    ViewData["Title"] = "Map";
+    @model ListingsViewModel;
+        int minPrice = 0;
+        int maxPrice = 0;
+        int minRating = 0;
+        if (Model.filters != null)
+        {
+            minPrice = Model.filters.MinPrice;
+            maxPrice = Model.filters.MaxPrice;
+            minRating = Model.filters.MinRating;
+        }
+}
+
+<h2>Map</h2>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div id='map' style='width: 800px; height: 600px;'></div>
+    </div>
+    <div class="col-lg-4">
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                            Filters
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse1" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <div id="filters">
+                            <form asp-controller="Listings" asp-action="Filter" method="post">
+                                <label class="col-sm-8" asp-for="filters.Neighbourhood"></label>
+                                @Html.DropDownListFor(model => model.filters.Neighbourhood, new SelectList(
+                                                              Model.neighbourhoods,
+                                                              "Neighbourhood",
+                                                              "Neighbourhood",
+                                                              0), "-- Please select --")
+
+                                <label class="col-sm-8" asp-for="filters.MinPrice">Minimum price per night:</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" asp-for="filters.MinPrice" type="number" name="filters.MinPrice" value="@minPrice" />
+                                </div>
+
+                                <label class="col-sm-8 control-label" asp-for="filters.MaxPrice">Maximum price per night:</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" asp-for="filters.MaxPrice" type="number" name="filters.MaxPrice" value="@maxPrice" />
+                                </div>
+                                <br />
+                                <label class="col-sm-8 control-label" asp-for="filters.MinRating">Minimum rating:</label>
+                                    <br />
+                                    <div class="col-sm-8">
+                                        <input class="form-control" asp-for="filters.MinRating" type="number" name="filters.MinRating" value="@minRating" />
+                                    </div>
+                                    <br />
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="submit" value="Filter" />
+                                </div>
+                            </form>
+                            @{
+                                if (Model.filters != null)
+                                {
+                                    <p>Filtered on:</p>
+                                    if (Model.filters.Neighbourhood != null)
+                                    {
+                                        <p>Neighbourhood: @Model.filters.Neighbourhood</p>
+                                    }
+                                    if (Model.filters.MinPrice > 0)
+                                    {
+                                        <p>Minimum price: @Model.filters.MinPrice</p>
+                                    }
+
+                                    if (Model.filters.MaxPrice > 0)
+                                    {
+                                        <p>Maximum price: @Model.filters.MaxPrice</p>
+                                    }
+
+
+                                    if (Model.filters.MinRating > 0)
+                                    {
+                                        <p>Minimum Rating: @Model.filters.MinRating</p>
+                                    }
+                                    <form asp-controller="Listings" asp-action="ClearFilter" method="get">
+                                        <div class="col-sm-8">
+                                            <input class="form-control" type="submit" value="Reset alle filters" />
+                                        </div>
+                                    </form>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                            Global graphs
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse2" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <canvas id="averagePricePerNeighbourhood"></canvas>
+                        <canvas id="averageRatingPerNeighbourhood"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                            Specific graphs
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse3" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <canvas id="availabilityPerYear"></canvas>
+                        <canvas id="reviewPerYear"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="~/js/MapBox.js"></script>
+<link rel="stylesheet" type="text/css" href="~/css/MapBox.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.js"></script>
