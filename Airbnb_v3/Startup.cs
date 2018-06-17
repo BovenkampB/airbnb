@@ -33,22 +33,16 @@ namespace Airbnb_v3
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.Configure<MvcOptions>(options =>
-            {
-                options.Filters.Add(new RequireHttpsAttribute());
-            });
-
-            //Default connection string voor identity
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-
+            // werkt nog niet
             // Use HTTPS instead of HTTP
             //services.Configure<MvcOptions>(options =>
             //{
             //    options.Filters.Add(new RequireHttpsAttribute());
             //});
+
+            //Default connection string voor identity
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddAuthentication().AddGoogle(googleOptions =>
             {
@@ -108,8 +102,13 @@ namespace Airbnb_v3
             {
                 app.UseExceptionHandler("/Home/Error");
 
-                var options = new RewriteOptions().AddRedirectToHttps();
-                app.UseRewriter(options);
+
+                //deze zorgt op het moment nog voor 2 many redirects error..
+                //var options = new RewriteOptions().AddRedirectToHttps();
+                //app.UseRewriter(options);
+
+
+
 
                 //app.UseHsts();
             }
