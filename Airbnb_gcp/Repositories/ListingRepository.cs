@@ -10,23 +10,17 @@ namespace Airbnb_gcp.Repositories
 {
     public class ListingRepository : IListingRepository
     {
-        private IMemoryCache _cache;
 
         private AirBNBContext _context;
 
-        public ListingRepository(AirBNBContext context, IMemoryCache cache)
+        public ListingRepository(AirBNBContext context)
         {
             _context = context;
-            _cache = cache;
         }
         public IEnumerable GetListings(ListingsFilters filters)
         {
             if (filters == null)
             {
-                //IQueryable<SummaryListings> result;
-                //IQueryable<SummaryListings> outvar;
-                //if (!_cache.TryGetValue("listings", out outvar))
-                //{
                     var result = _context.SummaryListings
                     .Join(_context.Listings, sL => sL.Id, l => l.Id, (sl, l) => new { sl, l })
                     .Select(i => new SummaryListings
@@ -41,15 +35,12 @@ namespace Airbnb_gcp.Repositories
                         Rating = i.l.ReviewScoresRating,
                         Availability365 = i.l.Availability365
 
-                    });
-                //    _cache.Set("listings", result, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(5)).SetAbsoluteExpiration(TimeSpan.FromHours(24)));
-                
+                    });               
 
                 return result;
             }
             else
             {
-
                 var result = _context.SummaryListings
                 .Join(_context.Listings, sL => sL.Id, l => l.Id, (sl, l) => new { sl, l })
                 .Select(i => new SummaryListings

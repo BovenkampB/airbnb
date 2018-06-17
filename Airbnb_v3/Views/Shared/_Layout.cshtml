@@ -32,10 +32,6 @@
                 <a asp-area="" asp-controller="Listings" asp-action="Index" class="navbar-brand">Airbnb_v3</a>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Listings" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Listings" asp-action="Index">Map</a></li>
-                </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
         </div>

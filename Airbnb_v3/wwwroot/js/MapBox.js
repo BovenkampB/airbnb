@@ -14,7 +14,7 @@ map.addControl(new mapboxgl.NavigationControl());
 
 
 
-fetch('http://localhost:9001/Listings/GetListings')
+fetch('/Listings/GetListings')
     .then((resp) => resp.json())
     .then(function (data) {
         var geojson = { features: [] }
@@ -163,7 +163,7 @@ function loadGeoJSON(geojson) {
 }
 
 function createLocationSpecificCharts(e) {
-    fetch("http://localhost:9001/SummaryReviews/getReviewsPerYear?id=" + e)
+    fetch("/SummaryReviews/getReviewsPerYear?id=" + e)
         .then((resp) => resp.json())
         .then(function (data) {
 
@@ -210,7 +210,7 @@ function createLocationSpecificCharts(e) {
 }
 
 function createAvgPricePerNeighbourhoodChart() {
-        fetch("http://localhost:9001/Listings/getAveragePricePerNeighbourhood")
+    fetch("/Listings/getAveragePricePerNeighbourhood")
             .then((resp) => resp.json())
             .then(function (data) {
 
@@ -256,7 +256,7 @@ function createAvgPricePerNeighbourhoodChart() {
 
 
 function createAvgRatingPerNeighbourhoodChart() {
-    fetch("http://localhost:9001/Listings/getAverageRatingPerNeighbourhood")
+    fetch("/Listings/getAverageRatingPerNeighbourhood")
         .then((resp) => resp.json())
         .then(function (data) {
 
