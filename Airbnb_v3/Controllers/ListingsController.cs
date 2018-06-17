@@ -13,7 +13,7 @@ using System.Collections;
 
 namespace Airbnb_v3.Controllers
 {
-
+    [RequireHttps]
     public class ListingsController : Controller
     {
         private readonly IListingRepository _repo;
