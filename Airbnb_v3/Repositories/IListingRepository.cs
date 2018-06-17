@@ -1,6 +1,8 @@
 ﻿using Airbnb_v3.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections;
+using System.Threading.Tasks;
 
 namespace Airbnb_v3.Repositories
 {
@@ -12,6 +14,6 @@ namespace Airbnb_v3.Repositories
         IEnumerable getReviewsPerYear(int id);
         IEnumerable getAveragePricePerNeighbourhood();
         IEnumerable getAverageRatingPerNeighbourhood();
+        Task<Listings> Details(int? id);
     }
-
 }

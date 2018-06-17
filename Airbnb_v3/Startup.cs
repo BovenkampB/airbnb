@@ -14,6 +14,7 @@ using Airbnb_v3.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
 using Airbnb_v3.Repositories;
+using Microsoft.AspNetCore.Http;
 
 namespace Airbnb_v3
 {
@@ -58,6 +59,7 @@ namespace Airbnb_v3
             services.AddMvc();
 
             services.AddMemoryCache();
+            services.AddResponseCaching();
 
 
             //services.AddMvc(config =>
@@ -110,6 +112,21 @@ namespace Airbnb_v3
             app.UseStaticFiles();
 
             app.UseAuthentication();
+
+            app.Use(async (context, next) =>
+            {
+                context.Response.GetTypedHeaders().CacheControl =
+                    new Microsoft.Net.Http.Headers.CacheControlHeaderValue()
+                    {
+                        Public = true,
+                        MaxAge = TimeSpan.FromSeconds(60)
+                    };
+                context.Response.Headers[Microsoft.Net.Http.Headers.HeaderNames.Vary] =
+                    new string[] { "Accept-Encoding" };
+
+                await next();
+            });
+
 
             app.UseMvc(routes =>
             {

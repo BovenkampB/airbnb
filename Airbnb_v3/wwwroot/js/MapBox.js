@@ -128,7 +128,7 @@ function loadGeoJSON(geojson) {
 
         new mapboxgl.Popup()
             .setLngLat(coordinates)
-            .setHTML('<h3>' + e.features[0].properties.name + '</h3> <br/> <img src=\"' + e.features[0].properties.thumbnailurl + '\" alt="Thumbnail" height="144" width="216" /> <p>' + e.features[0].properties.price + '</p><p> <a href="http://localhost:9001/Listings/Details/ ' + e.features[0].properties.id + '">Toon meer details</a></p>')
+            .setHTML('<h3>' + e.features[0].properties.name + '</h3> <br/> <p> Prijs: ' + e.features[0].properties.price + '</p><p> <a href="/Listings/Details/ ' + e.features[0].properties.id + '">Toon meer details</a></p>')
             .addTo(map);
 
 

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Airbnb_v3.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Airbnb_v3.Repositories
@@ -144,6 +146,24 @@ namespace Airbnb_v3.Repositories
                });
 
             return result;
+        }
+
+        public async Task<Listings> Details(int? id)
+        {
+            if (id == null)
+            {
+                return null;
+            }
+
+            var listings = await _context.Listings
+                .Include(l => l.IdNavigation)
+                .SingleOrDefaultAsync(m => m.Id == id);
+            if (listings == null)
+            {
+                return null;
+            }
+
+            return listings;
         }
     }
 }
