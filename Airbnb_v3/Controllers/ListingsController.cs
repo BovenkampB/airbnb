@@ -24,6 +24,7 @@ namespace Airbnb_v3.Controllers
             _repo = repo;
         }
 
+        [Authorize]
         // GET: Listings/Details/5
         public async Task<IActionResult> Details(int? id)
         {

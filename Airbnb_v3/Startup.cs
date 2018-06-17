@@ -43,10 +43,9 @@ namespace Airbnb_v3
 
             services.AddAuthentication().AddGoogle(googleOptions =>
             {
-                googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
-                googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+                googleOptions.ClientId = Configuration.GetConnectionString("ClientId");
+                googleOptions.ClientSecret = Configuration.GetConnectionString("ClientSecret");
             });
-
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
