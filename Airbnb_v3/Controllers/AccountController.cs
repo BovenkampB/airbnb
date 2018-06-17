@@ -41,6 +41,7 @@ namespace Airbnb_v3.Controllers
         public string ErrorMessage { get; set; }
 
         [HttpGet]
+        [Produces("text/html")]
         [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl = null)
         {
@@ -52,6 +53,7 @@ namespace Airbnb_v3.Controllers
         }
 
         [HttpPost]
+        [Produces("text/html")]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
@@ -205,6 +207,7 @@ namespace Airbnb_v3.Controllers
         }
 
         [HttpGet]
+        [Produces("text/html")]
         [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
         {
@@ -213,6 +216,7 @@ namespace Airbnb_v3.Controllers
         }
 
         [HttpPost]
+        [Produces("application/x-www-form-urlencoded")]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
@@ -347,6 +351,7 @@ namespace Airbnb_v3.Controllers
         }
 
         [HttpGet]
+        [Produces("text/html")]
         [AllowAnonymous]
         public IActionResult ForgotPassword()
         {

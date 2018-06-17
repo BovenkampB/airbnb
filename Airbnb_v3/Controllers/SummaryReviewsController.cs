@@ -154,6 +154,7 @@ namespace Airbnb_v3.Controllers
         }
 
         [HttpGet]
+        [Produces("application/json")]
         public IEnumerable getReviewsPerYear(int id)
         {
             var result = _listingsRepository.getReviewsPerYear(id);

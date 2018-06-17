@@ -40,6 +40,7 @@ namespace Airbnb_v3.Controllers
 
         [ResponseCache(VaryByHeader = "User-Agent", Duration = 30)]
         [HttpGet]
+        [Produces("application/json")]
         public IEnumerable GetListings()
         {
             var result = _repo.GetListings(listingFilters);
@@ -47,6 +48,7 @@ namespace Airbnb_v3.Controllers
             return result;
         }
 
+        [Produces("text/html")]
         [ResponseCache(VaryByHeader = "User-Agent", Duration = 30)]
         //[Authorize]
         public async Task<IActionResult> Index()
@@ -72,6 +74,7 @@ namespace Airbnb_v3.Controllers
 
         [ResponseCache(VaryByHeader = "User-Agent", Duration = 30)]
         [HttpGet]
+        [Produces("application/json")]
         public IEnumerable getAveragePricePerNeighbourhood()
         {
             var result = _repo.getAveragePricePerNeighbourhood();
@@ -80,6 +83,7 @@ namespace Airbnb_v3.Controllers
         }
 
         [ResponseCache(VaryByHeader = "User-Agent", Duration = 30)]
+        [Produces("application/json")]
         [HttpGet]
         public IEnumerable getAverageRatingPerNeighbourhood()
         {

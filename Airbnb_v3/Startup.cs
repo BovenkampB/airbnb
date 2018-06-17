@@ -15,6 +15,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
 using Airbnb_v3.Repositories;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace Airbnb_v3
 {
@@ -108,7 +111,18 @@ namespace Airbnb_v3
 
             //app.UseHttpsRedirection();
 
-            app.UseStaticFiles();
+
+            // Set up custom content types - associating file extension to MIME type
+            var provider = new FileExtensionContentTypeProvider();
+            // Add new mappings
+            provider.Mappings[".js"] = "application/javascript";
+            provider.Mappings[".css"] = "text/css";
+            provider.Mappings[".svg"] = "image/svg+xml";
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                ContentTypeProvider = provider
+            });
 
             app.UseAuthentication();
 
@@ -122,6 +136,9 @@ namespace Airbnb_v3
                     };
                 context.Response.Headers[Microsoft.Net.Http.Headers.HeaderNames.Vary] =
                     new string[] { "Accept-Encoding" };
+
+                context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+                context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
 
                 await next();
             });
