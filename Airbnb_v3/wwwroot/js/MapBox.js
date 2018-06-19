@@ -229,8 +229,8 @@ function createAvgPricePerNeighbourhoodChart() {
                     priceObject.push(data[i].price);
                 }
 
-                if (window.pricePerYear != undefined) {
-                    window.pricePerYear.destroy();
+                if (window.pricePerYearPerNeighbourhood != undefined) {
+                    window.pricePerYearPerNeighbourhood.destroy();
                 }
                 var pricePerNeighbourhood = document.getElementById('averagePricePerNeighbourhood').getContext('2d');
 
@@ -244,7 +244,7 @@ function createAvgPricePerNeighbourhoodChart() {
                     labels: neighbourhoodObject
                 };
 
-                window.pricePerYear = new Chart(pricePerNeighbourhood, {
+                window.pricePerYearPerNeighbourhood = new Chart(pricePerNeighbourhood, {
                     type: 'bar',
                     data: dataPrices,
                     options: {
@@ -278,8 +278,8 @@ function createAvgRatingPerNeighbourhoodChart() {
                 ratingObject.push(data[i].rating);
             }
 
-            if (window.reviewsPerYear != undefined) {
-                window.reviewsPerYear.destroy();
+            if (window.reviewsPerYearPerNeighbourhood != undefined) {
+                window.reviewsPerYearPerNeighbourhood.destroy();
             }
             var ratingPerNeighbourhood = document.getElementById('averageRatingPerNeighbourhood').getContext('2d');
 
@@ -293,7 +293,7 @@ function createAvgRatingPerNeighbourhoodChart() {
                 labels: neighbourhoodObject
             };
 
-            window.reviewsPerYear = new Chart(ratingPerNeighbourhood, {
+            window.reviewsPerYearPerNeighbourhood = new Chart(ratingPerNeighbourhood, {
                 type: 'bar',
                 data: dataRatings,
                 options: {
