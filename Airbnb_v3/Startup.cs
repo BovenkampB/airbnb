@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
+using InsideAirBNB.App.Services;
 
 namespace Airbnb_v3
 {
@@ -53,6 +54,32 @@ namespace Airbnb_v3
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = false;
+                options.Password.RequiredUniqueChars = 6;
+
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.MaxFailedAccessAttempts = 10;
+
+                options.SignIn.RequireConfirmedEmail = true;
+
+                options.User.RequireUniqueEmail = true;
+            });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.Cookie.Expiration = TimeSpan.FromHours(1);
+
+                options.SlidingExpiration = true;
+            });
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
@@ -92,26 +119,28 @@ namespace Airbnb_v3
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            var rewriteOptions = new RewriteOptions();
+
+            //Development omgeving
             if (env.IsDevelopment())
             {
                 app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+                rewriteOptions.AddRedirectToHttps(302, 44393);
             }
+
+            //Productie omgeving
             else
             {
                 app.UseExceptionHandler("/Home/Error");
 
-
-                //deze zorgt op het moment nog voor 2 many redirects error..
-                //var options = new RewriteOptions().AddRedirectToHttps();
-                //app.UseRewriter(options);
-
-
-
-
-                //app.UseHsts();
+                rewriteOptions.Add(new RewriteHttpsOnAppEngine(HttpsPolicy.Required));
             }
+
+
+            app.UseRewriter(rewriteOptions);
+
 
             // Make use of HTTPS instead of HTTP
             //var options = new RewriteOptions().AddRedirectToHttps();
@@ -148,6 +177,8 @@ namespace Airbnb_v3
 
                 context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
                 context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
+                context.Response.Headers.Add("X-Xss-Protection", "1");
+                context.Request.Headers.Add("Strict-Transport-Security", "max-age=31536000");
 
                 await next();
             });
