@@ -134,6 +134,10 @@ function loadGeoJSON(geojson) {
 
         createLocationSpecificCharts(e.features[0].properties.id);
 
+
+        if (window.availableChart != null) {
+            window.availableChart.destroy();
+        }
         var availabilityChart = document.getElementById('availabilityPerYear').getContext('2d');
 
         var dataAvailability = {
@@ -144,18 +148,18 @@ function loadGeoJSON(geojson) {
 
             // These labels appear in the legend and in the tooltips when hovering different arcs
             labels: [
-                'Available',
-                'Not available'
+                'Beschikbaar',
+                'Niet beschikbaar'
             ]
         };
 
-        var availableChart = new Chart(availabilityChart, {
+        window.availableChart = new Chart(availabilityChart, {
             type: 'pie',
             data: dataAvailability,
             options: {
                 title: {
                     display: true,
-                    text: 'Availability per year'
+                    text: 'Beschikbaarheid per jaar'
                 }
             }
         });
@@ -163,6 +167,7 @@ function loadGeoJSON(geojson) {
 }
 
 function createLocationSpecificCharts(e) {
+    
     fetch("/SummaryReviews/getReviewsPerYear?id=" + e)
         .then((resp) => resp.json())
         .then(function (data) {
@@ -175,11 +180,14 @@ function createLocationSpecificCharts(e) {
                 reviewsObject.push(data[i].numberOfReviews);
             }
 
+            if (window.reviewsPerYear != undefined) {
+                window.reviewsPerYear.destroy();
+            }
             var reviewPerYear = document.getElementById('reviewPerYear').getContext('2d');
 
             var dataReviews = {
                 datasets: [{
-                    label: 'Reviews per year',
+                    label: 'Aantal reviews',
                     data: reviewsObject
                 }],
 
@@ -188,8 +196,7 @@ function createLocationSpecificCharts(e) {
             };
 
 
-
-            var reviewsPerYear = new Chart(reviewPerYear, {
+            window.reviewsPerYear = new Chart(reviewPerYear, {
                 type: 'bar',
                 data: dataReviews,
                 options: {
@@ -202,7 +209,7 @@ function createLocationSpecificCharts(e) {
                     },
                     title: {
                         display: true,
-                        text: 'Reviews per year'
+                        text: 'Reviews per jaar'
                     }
                 }
             });
@@ -222,11 +229,14 @@ function createAvgPricePerNeighbourhoodChart() {
                     priceObject.push(data[i].price);
                 }
 
+                if (window.pricePerYear != undefined) {
+                    window.pricePerYear.destroy();
+                }
                 var pricePerNeighbourhood = document.getElementById('averagePricePerNeighbourhood').getContext('2d');
 
                 var dataPrices = {
                     datasets: [{
-                        label: 'Average price per neighbourhood',
+                        label: 'Prijs',
                         data: priceObject
                     }],
 
@@ -234,7 +244,7 @@ function createAvgPricePerNeighbourhoodChart() {
                     labels: neighbourhoodObject
                 };
 
-                var reviewsPerYear = new Chart(pricePerNeighbourhood, {
+                window.pricePerYear = new Chart(pricePerNeighbourhood, {
                     type: 'bar',
                     data: dataPrices,
                     options: {
@@ -247,7 +257,7 @@ function createAvgPricePerNeighbourhoodChart() {
                         },
                         title: {
                             display: true,
-                            text: 'Reviews per year'
+                            text: 'Gemiddelde prijs per buurt'
                         }
                     }
                 });
@@ -268,11 +278,14 @@ function createAvgRatingPerNeighbourhoodChart() {
                 ratingObject.push(data[i].rating);
             }
 
+            if (window.reviewsPerYear != undefined) {
+                window.reviewsPerYear.destroy();
+            }
             var ratingPerNeighbourhood = document.getElementById('averageRatingPerNeighbourhood').getContext('2d');
 
             var dataRatings = {
                 datasets: [{
-                    label: 'Average rating per neighbourhood',
+                    label: 'Beoordeling',
                     data: ratingObject
                 }],
 
@@ -280,7 +293,7 @@ function createAvgRatingPerNeighbourhoodChart() {
                 labels: neighbourhoodObject
             };
 
-            var reviewsPerYear = new Chart(ratingPerNeighbourhood, {
+            window.reviewsPerYear = new Chart(ratingPerNeighbourhood, {
                 type: 'bar',
                 data: dataRatings,
                 options: {
@@ -293,7 +306,7 @@ function createAvgRatingPerNeighbourhoodChart() {
                     },
                     title: {
                         display: true,
-                        text: 'Average rating per year'
+                        text: 'Gemiddelde beoordeling per wijk'
                     }
                 }
             });
