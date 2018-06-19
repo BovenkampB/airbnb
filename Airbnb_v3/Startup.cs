@@ -68,7 +68,7 @@ namespace Airbnb_v3
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
                 options.Lockout.MaxFailedAccessAttempts = 10;
 
-                options.SignIn.RequireConfirmedEmail = true;
+                options.SignIn.RequireConfirmedEmail = false;
 
                 options.User.RequireUniqueEmail = true;
             });
@@ -85,10 +85,27 @@ namespace Airbnb_v3
             services.AddTransient<IEmailSender, EmailSender>();
 
             // Add framework services.
-            services.AddMvc();
+            //services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.CacheProfiles.Add("Default",
+                    new CacheProfile()
+                    {
+                        Duration = 60
+                    });
+                options.CacheProfiles.Add("Never",
+                    new CacheProfile()
+                    {
+                        Location = ResponseCacheLocation.None,
+                        NoStore = true
+                    });
+            });
 
-            services.AddMemoryCache();
-            services.AddResponseCaching();
+
+
+
+            //services.AddMemoryCache();
+            //services.AddResponseCaching();
 
 
             //services.AddMvc(config =>
@@ -127,7 +144,6 @@ namespace Airbnb_v3
                 app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
-                rewriteOptions.AddRedirectToHttps(302, 44393);
             }
 
             //Productie omgeving
@@ -137,7 +153,6 @@ namespace Airbnb_v3
 
                 rewriteOptions.Add(new RewriteHttpsOnAppEngine(HttpsPolicy.Required));
             }
-
 
             app.UseRewriter(rewriteOptions);
 
@@ -166,12 +181,12 @@ namespace Airbnb_v3
 
             app.Use(async (context, next) =>
             {
-                context.Response.GetTypedHeaders().CacheControl =
-                    new Microsoft.Net.Http.Headers.CacheControlHeaderValue()
-                    {
-                        Public = true,
-                        MaxAge = TimeSpan.FromSeconds(60)
-                    };
+                //context.Response.GetTypedHeaders().CacheControl =
+                //    new Microsoft.Net.Http.Headers.CacheControlHeaderValue()
+                //    {
+                //        Public = true,
+                //        MaxAge = TimeSpan.FromSeconds(60)
+                //    };
                 context.Response.Headers[Microsoft.Net.Http.Headers.HeaderNames.Vary] =
                     new string[] { "Accept-Encoding" };
 
