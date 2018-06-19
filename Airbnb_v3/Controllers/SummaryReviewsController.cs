@@ -11,6 +11,7 @@ using System.Collections;
 
 namespace Airbnb_v3.Controllers
 {
+    [ResponseCache(CacheProfileName = "Default")]
     public class SummaryReviewsController : Controller
     {
         private readonly AirBNBContext _context;
@@ -139,6 +140,7 @@ namespace Airbnb_v3.Controllers
 
         // POST: SummaryReviews/Delete/5
         [HttpPost, ActionName("Delete")]
+        [ResponseCache(CacheProfileName = "Never")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
