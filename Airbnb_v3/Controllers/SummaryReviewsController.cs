@@ -11,7 +11,6 @@ using System.Collections;
 
 namespace Airbnb_v3.Controllers
 {
-    [RequireHttps]
     public class SummaryReviewsController : Controller
     {
         private readonly AirBNBContext _context;

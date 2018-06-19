@@ -16,7 +16,6 @@ using Airbnb_v3.Services;
 
 namespace Airbnb_v3.Controllers
 {
-    [RequireHttps]
     [Authorize]
     [Route("[controller]/[action]")]
     public class ManageController : Controller
