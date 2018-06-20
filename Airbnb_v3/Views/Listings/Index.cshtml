@@ -64,25 +64,25 @@
                             @{
                                 if (Model.filters != null)
                                 {
-                                    <p>Filtered on:</p>
+                                    <p>Gefilterd op:</p>
                                     if (Model.filters.Neighbourhood != null)
                                     {
-                                        <p>Neighbourhood: @Model.filters.Neighbourhood</p>
+                                        <p>Buurt: @Model.filters.Neighbourhood</p>
                                     }
                                     if (Model.filters.MinPrice > 0)
                                     {
-                                        <p>Minimum price: @Model.filters.MinPrice</p>
+                                        <p>Minimum prijs: @Model.filters.MinPrice</p>
                                     }
 
                                     if (Model.filters.MaxPrice > 0)
                                     {
-                                        <p>Maximum price: @Model.filters.MaxPrice</p>
+                                        <p>Maximum prijs: @Model.filters.MaxPrice</p>
                                     }
 
 
                                     if (Model.filters.MinRating > 0)
                                     {
-                                        <p>Minimum Rating: @Model.filters.MinRating</p>
+                                        <p>Minimum beoordeling: @Model.filters.MinRating</p>
                                     }
                                     <form asp-controller="Listings" asp-action="ClearFilter" method="get">
                                         <div class="col-sm-8">
