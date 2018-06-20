@@ -25,7 +25,6 @@ namespace Airbnb_v3.Controllers
         }
 
         [Authorize]
-        [ResponseCache(CacheProfileName = "Default")]
         // GET: Listings/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -44,7 +43,6 @@ namespace Airbnb_v3.Controllers
         public async Task<IEnumerable> GetListings()
         {
             return await _repo.GetListings(listingFilters);
-            
         }
 
         [Produces("text/html")]
