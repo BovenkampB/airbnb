@@ -34,13 +34,6 @@ namespace Airbnb_v3
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // werkt nog niet
-            // Use HTTPS instead of HTTP
-            //services.Configure<MvcOptions>(options =>
-            //{
-            //    options.Filters.Add(new RequireHttpsAttribute());
-            //});
-
             //Default connection string voor identity
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -85,7 +78,6 @@ namespace Airbnb_v3
             services.AddTransient<IEmailSender, EmailSender>();
 
             // Add framework services.
-            //services.AddMvc();
             services.AddMvc(options =>
             {
                 options.CacheProfiles.Add("Default",
@@ -100,33 +92,6 @@ namespace Airbnb_v3
                         NoStore = true
                     });
             });
-
-
-
-
-            //services.AddMemoryCache();
-            //services.AddResponseCaching();
-
-
-            //services.AddMvc(config =>
-            //{
-            //    config.Filters.Add(new RequireHttpsAttribute());
-            //});
-
-            //services.AddHsts(options =>
-            //{
-            //    options.Preload = true;
-            //    options.IncludeSubDomains = true;
-            //    options.MaxAge = TimeSpan.FromDays(60);
-            //    options.ExcludedHosts.Add("example.com");
-            //    options.ExcludedHosts.Add("www.example.com");
-            //});
-
-            //services.AddHttpsRedirection(options =>
-            //{
-            //    options.RedirectStatusCode = StatusCodes.Status301MovedPermanently;
-            //    options.HttpsPort = 5001;
-            //});
 
             //ConnectionString is now retreived from appsettings.json
             services.AddDbContext<AirBNBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Airbnb")));
@@ -156,15 +121,6 @@ namespace Airbnb_v3
 
             app.UseRewriter(rewriteOptions);
 
-
-            // Make use of HTTPS instead of HTTP
-            //var options = new RewriteOptions().AddRedirectToHttps();
-
-            //app.UseRewriter(options);
-
-            //app.UseHttpsRedirection();
-
-
             // Set up custom content types - associating file extension to MIME type
             var provider = new FileExtensionContentTypeProvider();
             // Add new mappings
@@ -181,12 +137,6 @@ namespace Airbnb_v3
 
             app.Use(async (context, next) =>
             {
-                //context.Response.GetTypedHeaders().CacheControl =
-                //    new Microsoft.Net.Http.Headers.CacheControlHeaderValue()
-                //    {
-                //        Public = true,
-                //        MaxAge = TimeSpan.FromSeconds(60)
-                //    };
                 context.Response.Headers[Microsoft.Net.Http.Headers.HeaderNames.Vary] =
                     new string[] { "Accept-Encoding" };
 
