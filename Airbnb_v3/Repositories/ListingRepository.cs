@@ -12,109 +12,21 @@ namespace Airbnb_v3.Repositories
 {
     public class ListingRepository : IListingRepository
     {
-        private IMemoryCache _cache;
+        //private IMemoryCache ;
 
         private AirBNBContext _context;
 
         public ListingRepository(AirBNBContext context, IMemoryCache memoryCache)
         {
             _context = context;
-            _cache = memoryCache;
+            //_cache = memoryCache;
         }
 
-        //public IEnumerable GetListingsWithCachingNotWorkingFiltering(ListingsFilters filters)
-        //{
-        //    IQueryable<SummaryListings> result;
-        //    //IQueryable<SummaryListings> outVar;
-        //    if (filters != null)
-        //    {
-        //        //_cache.Remove("Listings");
-        //        var tempResult = _context.SummaryListings
-        //        .Join(_context.Listings, sL => sL.Id, l => l.Id, (sl, l) => new { sl, l })
-        //        .Select(i => new SummaryListings
-        //        {
-        //            Id = i.sl.Id,
-        //            Name = i.sl.Name,
-        //            Longitude = i.sl.Longitude,
-        //            Latitude = i.sl.Latitude,
-        //            HostName = i.sl.HostName,
-        //            Neighbourhood = i.sl.Neighbourhood,
-        //            Price = i.sl.Price,
-        //            Rating = i.l.ReviewScoresRating,
-        //            Availability365 = i.l.Availability365
-        //        });
-
-        //        if (filters.Neighbourhood != null)
-        //        {
-        //            tempResult = tempResult.Where(l => l.Neighbourhood == filters.Neighbourhood);
-        //        }
-
-
-        //        if (filters.MinPrice > 0 && filters.MaxPrice > 0)
-        //        {
-        //            tempResult = tempResult.Where(l => l.Price > filters.MinPrice && l.Price < filters.MaxPrice);
-        //        }
-        //        else if (filters.MinPrice > 0 && filters.MaxPrice == 0)
-        //        {
-        //            tempResult = tempResult.Where(l => l.Price > filters.MinPrice);
-        //        }
-        //        else if (filters.MinPrice == 0 && filters.MaxPrice > 0)
-        //        {
-        //            tempResult = tempResult.Where(l => l.Price < filters.MaxPrice);
-        //        }
-
-        //        if (filters.MinRating > 0)
-        //        {
-        //            tempResult = tempResult.Where(l => l.Rating > filters.MinRating);
-        //        }
-        //        //_cache.Remove("Listings");
-        //        return tempResult;
-
-        //    }
-
-        //    // Look for cache key.
-        //    //if (filters == null && !_cache.TryGetValue("Listings", out result))
-        //    {
-        //        // Key not in cache, so get data.
-        //        result = _context.SummaryListings
-        //            .Join(_context.Listings, sL => sL.Id, l => l.Id, (sl, l) => new { sl, l })
-        //            .Select(i => new SummaryListings
-        //            {
-        //                Id = i.sl.Id,
-        //                Name = i.sl.Name,
-        //                Longitude = i.sl.Longitude,
-        //                Latitude = i.sl.Latitude,
-        //                HostName = i.sl.HostName,
-        //                Neighbourhood = i.sl.Neighbourhood,
-        //                Price = i.sl.Price,
-        //                Rating = i.l.ReviewScoresRating,
-        //                Availability365 = i.l.Availability365
-
-        //            });
-
-        //        // Set cache options.
-        //        var cacheEntryOptions = new MemoryCacheEntryOptions()
-        //        // Keep in cache for this time, reset time if accessed.
-        //        .SetSlidingExpiration(TimeSpan.FromSeconds(30));
-
-        //        // Save data in cache.
-        //        //_cache.Set("Listings", result, cacheEntryOptions);
-
-        //        return result;
-        //    }
-        //    return null;
-        //}
-
-        public IEnumerable GetListings(ListingsFilters filters)
+        public async Task<IEnumerable> GetListings(ListingsFilters filters)
         {
             if (filters == null)
             {
-                //IQueryable<SummaryListings> result;
-                //IQueryable<SummaryListings> outvar;
-                //if (!_cache.TryGetValue("listings", out outvar))
-                //{
-                    var result = _context.SummaryListings
-                    .Join(_context.Listings, sL => sL.Id, l => l.Id, (sl, l) => new { sl, l })
+                return await _context.SummaryListings.Join(_context.Listings, sL => sL.Id, l => l.Id, (sl, l) => new { sl, l })
                     .Select(i => new SummaryListings
                     {
                         Id = i.sl.Id,
@@ -126,37 +38,23 @@ namespace Airbnb_v3.Repositories
                         Price = i.sl.Price,
                         Rating = i.l.ReviewScoresRating,
                         Availability365 = i.l.Availability365
-
-                    });
-
-
-                //_cache.Set("listings", result, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(5)).SetAbsoluteExpiration(TimeSpan.FromHours(24)));
-                //}
-                //else
-                //{
-                //    result = outvar;
-                //    Console.WriteLine("SERVED FROM CACHE!!!!!!!");
-                //}
-
-                return result;
+                    }).ToListAsync();
             }
             else
             {
-
-                var result = _context.SummaryListings
-                .Join(_context.Listings, sL => sL.Id, l => l.Id, (sl, l) => new { sl, l })
-                .Select(i => new SummaryListings
-                {
-                    Id = i.sl.Id,
-                    Name = i.sl.Name,
-                    Longitude = i.sl.Longitude,
-                    Latitude = i.sl.Latitude,
-                    HostName = i.sl.HostName,
-                    Neighbourhood = i.sl.Neighbourhood,
-                    Price = i.sl.Price,
-                    Rating = i.l.ReviewScoresRating,
-                    Availability365 = i.l.Availability365
-                });
+                var result = _context.SummaryListings.Join(_context.Listings, sL => sL.Id, l => l.Id, (sl, l) => new { sl, l })
+                    .Select(i => new SummaryListings
+                    {
+                        Id = i.sl.Id,
+                        Name = i.sl.Name,
+                        Longitude = i.sl.Longitude,
+                        Latitude = i.sl.Latitude,
+                        HostName = i.sl.HostName,
+                        Neighbourhood = i.sl.Neighbourhood,
+                        Price = i.sl.Price,
+                        Rating = i.l.ReviewScoresRating,
+                        Availability365 = i.l.Availability365
+                    });
 
                 if (filters.Neighbourhood != null)
                 {
@@ -181,8 +79,7 @@ namespace Airbnb_v3.Repositories
                 {
                     result = result.Where(l => l.Rating > filters.MinRating);
                 }
-                return result;
-
+                return await result.ToListAsync();
             }
         }
 

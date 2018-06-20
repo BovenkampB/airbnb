@@ -8,7 +8,7 @@ namespace Airbnb_v3.Repositories
 {
     public interface IListingRepository
     {
-        IEnumerable GetListings(ListingsFilters filters);
+        Task<IEnumerable> GetListings(ListingsFilters filters);
         IEnumerable GetNeighbourHoods();
 
         IEnumerable getReviewsPerYear(int id);
