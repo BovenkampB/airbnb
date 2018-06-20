@@ -36,24 +36,20 @@ namespace Airbnb_v3.Controllers
             }
             
             return View(result);
-
         }
 
         [ResponseCache(CacheProfileName = "Never")]
         [HttpGet]
         [Produces("application/json")]
-        public IEnumerable GetListings()
+        public async Task<IEnumerable> GetListings()
         {
-            var result = _repo.GetListings(listingFilters);
-
-            return result;
+            return await _repo.GetListings(listingFilters);
+            
         }
 
         [Produces("text/html")]
         [ResponseCache(CacheProfileName = "Never")]
-        //[ResponseCache(VaryByHeader = "User-Agent", Duration = 30)]
-        //[Authorize]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             IEnumerable<Neighbourhoods> neighbourhoods = (IEnumerable<Neighbourhoods>)_repo.GetNeighbourHoods();
 
@@ -74,7 +70,6 @@ namespace Airbnb_v3.Controllers
             return Redirect("../Listings");
         }
 
-        //[ResponseCache(VaryByHeader = "User-Agent", Duration = 30)]
         [HttpGet]
         [Produces("application/json")]
         public IEnumerable getAveragePricePerNeighbourhood()
@@ -84,7 +79,6 @@ namespace Airbnb_v3.Controllers
             return result;
         }
 
-        //[ResponseCache(VaryByHeader = "User-Agent", Duration = 30)]
         [Produces("application/json")]
         [HttpGet]
         public IEnumerable getAverageRatingPerNeighbourhood()
