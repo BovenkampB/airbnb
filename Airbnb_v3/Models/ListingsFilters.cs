@@ -1,4 +1,4 @@
-﻿namespace Airbnb_v3.Repositories
+﻿namespace Airbnb_v3.Models
 {
     public class ListingsFilters
     {
