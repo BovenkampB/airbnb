@@ -10,7 +10,6 @@ namespace Airbnb_v3.Repositories
     {
         Task<IEnumerable> GetListings(ListingsFilters filters);
         IEnumerable GetNeighbourHoods();
-
         IEnumerable getReviewsPerYear(int id);
         IEnumerable getAveragePricePerNeighbourhood();
         IEnumerable getAverageRatingPerNeighbourhood();
